@@ -27,6 +27,8 @@ After installing the gem, you want to add a line before using Turkish supported 
   using TurkishSupport
 ```
 
+If you want to see a simple [gist](https://gist.github.com/sbagdat/9964521) that shows how should you use it.
+
 Now you can use your shiny new methods like below:
 
 ```ruby
