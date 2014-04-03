@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TurkishSupport::VERSION
   spec.authors       = ["Sıtkı Bağdat"]
   spec.email         = ["sbagdat@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Turkish characters support for upcase, downcase, etc.}
+  spec.description   = %q{A gem for Turkish character support for String#upcase, String#downcase, String#capitalize methods and their destructive versions like String#upcase!. In other words; this gem is a lighter version of the UnicodeUtils gem. }
+  spec.homepage      = "https://github.com/sbagdat/turkish_support"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
