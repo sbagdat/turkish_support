@@ -6,6 +6,10 @@ module TurkishSupport
     upcase: 'ÇĞIİÖŞÜ'
   }
 
+  def self.refined
+    puts "REFINED#{"*"*50}"
+  end
+
   refine String do
     def change_chars_for_upcase
       tr UNSUPPORTED_CHARS[:downcase], UNSUPPORTED_CHARS[:upcase]
@@ -38,5 +42,14 @@ module TurkishSupport
     def capitalize!
       replace(capitalize)
     end
+
+    def casecmp(other_string)
+      upcase.send(:casecmp, other_string.upcase)
+    end
+
+    def titleize
+      self.split.map{ |w| w.capitalize }*(' ')
+    end
   end
 end
+

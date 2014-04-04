@@ -1,9 +1,7 @@
 require 'spec_helper'
 
-include TurkishSupport
-using TurkishSupport
-
 module TurkishSupport
+
   describe VERSION do
     it 'should have a version number' do
       TurkishSupport::VERSION.should_not be_nil
@@ -11,6 +9,8 @@ module TurkishSupport
   end
 
   describe String do
+    using TurkishSupport
+
     let(:downcased_turkish_alphabet) { "abcçdefgğhıijklmnoöprsştuüvyz" }
     let(:upcased_turkish_alphabet)   { "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ" }
     let(:downcased_english_alphabet) { [*'a'..'z'].join }
@@ -62,7 +62,7 @@ module TurkishSupport
       context "with destructive version" do
         it "changes the original value of the string with the downcased version" do
           expect{ upcased_turkish_alphabet.downcase! }.to change{ upcased_turkish_alphabet }
-          expect( upcased_turkish_alphabet).to eq( downcased_turkish_alphabet )
+          expect( upcased_turkish_alphabet).to eq(downcased_turkish_alphabet)
         end
       end
     end
@@ -92,6 +92,20 @@ module TurkishSupport
           expect{ turkish_word.capitalize! }.to change{ turkish_word }
           expect(turkish_word).to eq('Çamur')
         end
+      end
+    end
+
+    describe "#casecmp" do
+      it "compares Turkish characters correctly" do
+        result = downcased_turkish_alphabet.casecmp(upcased_turkish_alphabet)
+        expect(result).to be_zero
+      end
+    end
+
+    describe "#titleize" do
+      it "capitalizes first character of all words" do
+        titleized = "merhaba çamur ismet".titleize
+        expect(titleized).to eq("Merhaba Çamur İsmet")
       end
     end
   end
