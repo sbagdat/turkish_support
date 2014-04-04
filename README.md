@@ -1,5 +1,8 @@
 # TurkishSupport
 
+[![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
+
+
 A gem for Turkish character support for `String#upcase`, `String#downcase`, `String#capitalize` methods and their destructive versions like `String#upcase!`. In other words; this gem is a lighter version of the UnicodeUtils gem.
 
 ## Requirements
