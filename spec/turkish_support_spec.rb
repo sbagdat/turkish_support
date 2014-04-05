@@ -103,8 +103,13 @@ module TurkishSupport
     end
 
     describe "#titleize" do
-      it "capitalizes first character of all words" do
+      it "upcases first character of all words" do
         titleized = "merhaba çamur ismet".titleize
+        expect(titleized).to eq("Merhaba Çamur İsmet")
+      end
+
+      it "downcases characters other than first characters of all words" do
+        titleized = "mERHABA çAMUR iSMET".titleize
         expect(titleized).to eq("Merhaba Çamur İsmet")
       end
     end
