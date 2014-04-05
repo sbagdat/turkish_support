@@ -2,11 +2,27 @@
 
 [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
 
+Turkish character support for some standard Ruby methods. This gem provide support for these methods:
+* `String#upcase`
+* `String#upcase!`
+* `String#downcase`
+* `String#downcase!`
+* `String#capitalize`
+* `String#capitalize!`
+* `String#swapcase`
+* `String#swapcase!`
+* `String#casecmp`
 
-A gem for Turkish character support for `String#upcase`, `String#downcase`, `String#capitalize` methods and their destructive versions like `String#upcase!`. In other words; this gem is a lighter version of the UnicodeUtils gem.
+Also gives you some new methods like:
+* `String#titleize`
 
 ## Requirements
-TurkishSupport uses refinements instead of monkey patching. So, you need to install at least v2.0.0 of Ruby.
+
+* Ruby  >= 2.0.0
+* Rails >= 4.0.0
+
+__Notice:__ TurkishSupport uses refinements instead of monkey patching. Refinements come with Ruby 2.0.0 as a new feature
+and also, it is an experimental feature for now. If you want to more information about refinements, you can see the doc at [http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html](http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html)
 
 ## Installation
 
@@ -22,17 +38,27 @@ Or install it yourself as:
 
     $ gem install turkish_support
 
-## Usage
+## Usage Instructions
 
-After installing the gem, you want to add a line before using Turkish supported version of the methods.
+After the installation of the gem, you should follow these steps.
+
+* You need require it.
+
+__Note:__ If you are using a framework like Rails, you don't need to require, because it is already required by the framework.
 
 ```ruby
-  using TurkishSupport
+  require TurkishSupport
 ```
 
-If you want to see a simple [gist](https://gist.github.com/sbagdat/9964521) that shows how should you use it.
+* Add `using TurkishSupport` line to the top of the scope, __not inside of any class or module__.
 
-Now you can use your shiny new methods like below:
+```ruby
+  using   TurkishSupport
+```
+
+## Examples
+
+Within the file which you added `using TurkishSupport` line to the top of the scope; you can use core methods like below:
 
 ```ruby
   str = 'Bağcılar'
@@ -44,6 +70,13 @@ Now you can use your shiny new methods like below:
   str             #=> "ismail"
 
   "merhaba".capitalize  #=> "Merhaba"
+```
+
+__Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:
+
+```ruby
+  str = 'Bağcılar'
+  str.send(:upcase)  #=> "BAğCıLAR"
 ```
 
 
