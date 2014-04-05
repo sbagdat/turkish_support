@@ -6,4 +6,7 @@ require "turkish_support/downcase"
 require "turkish_support/capitalize"
 require "turkish_support/titleize"
 require "turkish_support/casecmp"
+require "turkish_support/swapcase"
+
+
 

@@ -108,6 +108,14 @@ module TurkishSupport
         expect(titleized).to eq("Merhaba Çamur İsmet")
       end
     end
+
+    describe "#swapcase" do
+      it "swaps characters correctly" do
+        word = "mErHaba çamur ismetoğullarI".swapcase
+        expect(word).to eq("MeRhABA ÇAMUR İSMETOĞULLARı")
+      end
+    end
+
   end
 end
 
