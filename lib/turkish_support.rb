@@ -8,5 +8,6 @@ require "turkish_support/titleize"
 require "turkish_support/casecmp"
 require "turkish_support/swapcase"
 
-
+module TurkishSupport
+end
 
