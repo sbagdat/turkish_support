@@ -1,7 +1,7 @@
 require 'spec_helper'
+using TurkishSupport
 
 module TurkishSupport
-
   describe VERSION do
     it 'should have a version number' do
       TurkishSupport::VERSION.should_not be_nil
@@ -9,8 +9,6 @@ module TurkishSupport
   end
 
   describe String do
-    using TurkishSupport
-
     let(:downcased_turkish_alphabet) { "abcçdefgğhıijklmnoöprsştuüvyz" }
     let(:upcased_turkish_alphabet)   { "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ" }
     let(:downcased_english_alphabet) { [*'a'..'z'].join }
@@ -109,20 +107,32 @@ module TurkishSupport
       end
 
       it "downcases characters other than first characters of all words" do
-        titleized = "mERHABA çAMUR iSMET".titleize
-        expect(titleized).to eq("Merhaba Çamur İsmet")
+        titleized = "mERHABA çAMUR iSMETOĞULLARI".titleize
+        expect(titleized).to eq("Merhaba Çamur İsmetoğulları")
       end
     end
 
     describe "#swapcase" do
-      it "swaps characters correctly" do
-        word = "mErHaba çamur ismetoğullarI".swapcase
-        expect(word).to eq("MeRhABA ÇAMUR İSMETOĞULLARı")
+      context "with non-destructive version" do
+        it "does not change the original value of the string" do
+          word = "mErHaba çamur ismetoğullarI"
+          expect{ word.swapcase }.to_not change{ word }
+        end
+
+        it "swaps characters correctly" do
+          word = "mErHaba çamur ismetoğullarI".swapcase
+          expect(word).to eq("MeRhABA ÇAMUR İSMETOĞULLARı")
+        end
+      end
+
+      context "with destructive version" do
+        it "changes the original value of the string with the swapcased version" do
+          word = "mErHaba çamur ismetoğullarI"
+          expect{ word.swapcase! }.to change{ word }
+          expect(word).to eq('MeRhABA ÇAMUR İSMETOĞULLARı')
+        end
       end
     end
 
   end
 end
-
-
-
