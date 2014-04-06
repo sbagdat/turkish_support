@@ -1,6 +1,6 @@
 module TurkishSupport
   refine String do
-    DESTRUCTIVE_METHODS[:string].each do |method_name|
+    DESTRUCTIVE_STRING_METHODS.each do |method_name|
         define_method "#{method_name}!" do
           send(:replace, eval("#{method_name}"))
         end
@@ -8,7 +8,7 @@ module TurkishSupport
   end
 
   refine Array do
-    DESTRUCTIVE_METHODS[:array].each do |method_name|
+    DESTRUCTIVE_ARRAY_METHODS.each do |method_name|
         define_method "#{method_name}!" do
           send(:replace, eval("#{method_name}"))
         end

@@ -1,26 +1,11 @@
 module TurkishSupport
-  UNSUPPORTED_CHARS = {
-    downcase: 'çğıiöşü',
-    upcase:   'ÇĞIİÖŞÜ'
-  }
+  DOWNCASED_ALPHABET = 'abcçdefgğhıijklmnoöprsştuüvyz'
+  UPCASED_ALPHABET   = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'
 
-  NORMALIZED_CHARS = {
-    'ç' => 'c',
-    'Ç' => 'C',
-    'ğ' => 'g',
-    'Ğ' => 'G',
-    'ı' => 'i',
-    'İ' => 'I',
-    'ö' => 'o',
-    'Ö' => 'O',
-    'ş' => 's',
-    'Ş' => 'S',
-    'ü' => 'u',
-    'Ü' => 'U'
-  }
+  UNSUPPORTED_DOWNCASE_CHARS  = 'çğıiöşü'
+  UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
+  ORDERED_CHARS               = 'AaBbCcÇçDdEeFfGgĞğHhIıİiJjKkLlMmNnOoÖöPpQqRrSsŞşTtUuÜüVvWwXxYyZz'
 
-  DESTRUCTIVE_METHODS = {
-    string: %i(capitalize downcase swapcase titleize upcase),
-    array:  %i(sort)
-  }
+  DESTRUCTIVE_STRING_METHODS  = %i(capitalize downcase swapcase titleize upcase)
+  DESTRUCTIVE_ARRAY_METHODS   = %i(sort)
 end

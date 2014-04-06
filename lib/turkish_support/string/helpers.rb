@@ -1,23 +1,24 @@
 module TurkishSupport
   refine String do
+
     def change_chars_for_upcase
-        tr UNSUPPORTED_CHARS[:downcase], UNSUPPORTED_CHARS[:upcase]
+      tr UNSUPPORTED_DOWNCASE_CHARS, UNSUPPORTED_UPCASE_CHARS
     end
 
     def change_chars_for_downcase
-      tr UNSUPPORTED_CHARS[:upcase], UNSUPPORTED_CHARS[:downcase]
+      tr UNSUPPORTED_UPCASE_CHARS, UNSUPPORTED_DOWNCASE_CHARS
     end
 
-    def is_unsupported_downcase?
-      UNSUPPORTED_CHARS[:downcase].include? chr
+    def unsupported_downcase?
+      UNSUPPORTED_DOWNCASE_CHARS.include? chr
     end
 
-    def is_unsupported_upcase?
-      UNSUPPORTED_CHARS[:upcase].include? chr
+    def unsupported_upcase?
+      UNSUPPORTED_UPCASE_CHARS.include? chr
     end
 
-    def is_unsupported?
-      is_unsupported_upcase? or is_unsupported_downcase?
+    def unsupported?
+      unsupported_upcase? or unsupported_downcase?
     end
 
     alias_method :words, :split
