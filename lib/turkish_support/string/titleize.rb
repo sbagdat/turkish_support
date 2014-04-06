@@ -3,5 +3,9 @@ module TurkishSupport
     def titleize
       split.map{ |w| w.downcase.capitalize }.join(' ')
     end
+
+    def titleize!
+      replace(titleize)
+    end
   end
 end

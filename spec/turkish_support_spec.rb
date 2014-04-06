@@ -101,15 +101,30 @@ module TurkishSupport
     end
 
     describe "#titleize" do
-      it "upcases first character of all words" do
-        titleized = "merhaba çamur ismet".titleize
-        expect(titleized).to eq("Merhaba Çamur İsmet")
+      context "with non-destructive version" do
+        it "does not change the original value of the string" do
+          word = "mERHABA çAMUR iSMETOĞULLARI"
+          expect{ word.titleize }.to_not change{ word }
+        end
+
+        it "upcases first character of all words" do
+          titleized = "merhaba çamur ismet".titleize
+          expect(titleized).to eq("Merhaba Çamur İsmet")
+        end
+
+        it "downcases characters other than first characters of all words" do
+          titleized = "mERHABA çAMUR iSMETOĞULLARI".titleize
+          expect(titleized).to eq("Merhaba Çamur İsmetoğulları")
+        end
       end
 
-      it "downcases characters other than first characters of all words" do
-        titleized = "mERHABA çAMUR iSMETOĞULLARI".titleize
-        expect(titleized).to eq("Merhaba Çamur İsmetoğulları")
-      end
+      context "with destructive version" do
+          it "changes the original value of the string with the titleized version" do
+            word = "mERHABA çAMUR iSMETOĞULLARI"
+            expect{ word.titleize! }.to change{ word }
+            expect(word).to eq("Merhaba Çamur İsmetoğulları")
+          end
+        end
     end
 
     describe "#swapcase" do
@@ -133,7 +148,6 @@ module TurkishSupport
         end
       end
     end
-
   end
 
   describe Array do
@@ -151,5 +165,4 @@ module TurkishSupport
       end
     end
   end
-
 end

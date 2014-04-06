@@ -16,6 +16,7 @@ Turkish character support for some standard Ruby methods. This gem provide suppo
 
 Also gives you some new methods like:
 * `String#titleize`
+* `String#titleize!`
 
 ## Requirements
 
