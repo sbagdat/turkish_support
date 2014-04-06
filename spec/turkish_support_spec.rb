@@ -135,4 +135,21 @@ module TurkishSupport
     end
 
   end
+
+  describe Array do
+    let(:unsorted_array1) { ["bağcılar", "bahçelievler", "şimdi", "çüNKÜ", "olmalı", "üç kere", "düş", "ılık", "duy"] }
+    let(:sorted_array1) { ["bağcılar", "bahçelievler", "çüNKÜ", "duy", "düş", "ılık", "olmalı", "şimdi", "üç kere"] }
+    let(:unsorted_array2) { ["iki", "üç", "dört", "ılık", "iğne", "iyne", "ul"] }
+    let(:sorted_array2) { ["dört", "ılık", "iğne", "iki", "iyne", "ul", "üç"] }
+
+    describe "#sort" do
+      it "does sort array in alphabetical order" do
+        expect(unsorted_array1.sort).to eq(sorted_array1)
+      end
+      it "does sort array in alphabetical order" do
+        expect(unsorted_array2.sort).to eq(sorted_array2)
+      end
+    end
+  end
+
 end

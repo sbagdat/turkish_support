@@ -7,6 +7,7 @@ require "turkish_support/capitalize"
 require "turkish_support/titleize"
 require "turkish_support/casecmp"
 require "turkish_support/swapcase"
+require "turkish_support/array_sort"
 
 module TurkishSupport
 end
