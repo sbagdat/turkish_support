@@ -14,6 +14,7 @@ Turkish character support for some standard Ruby methods. This gem provide suppo
 * `String#swapcase!`
 * `String#casecmp`
 * `Array#sort`
+* `Array#sort!`
 
 Also gives you some new methods like:
 * `String#titleize`
