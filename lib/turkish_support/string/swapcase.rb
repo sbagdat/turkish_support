@@ -9,9 +9,5 @@ module TurkishSupport
         end
       end.join
     end
-
-    def swapcase!
-      replace(swapcase)
-    end
   end
 end

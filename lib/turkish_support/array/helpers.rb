@@ -1,7 +1,7 @@
 module TurkishSupport
   refine Array do
     def to_number_array(string)
-      string.split('').map{|c| integer_order(c) }
+      string.chars.map { |c| integer_order(c) }
     end
 
     def integer_order(char)

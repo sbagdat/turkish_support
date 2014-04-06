@@ -12,5 +12,7 @@ require "turkish_support/string/swapcase"
 require "turkish_support/array/helpers"
 require "turkish_support/array/sort"
 
+require "turkish_support/destructives"
+
 module TurkishSupport
 end

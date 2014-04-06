@@ -19,5 +19,7 @@ module TurkishSupport
     def is_unsupported?
       is_unsupported_upcase? or is_unsupported_downcase?
     end
+
+    alias_method :words, :split
   end
 end
