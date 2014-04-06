@@ -9,11 +9,11 @@ module TurkishSupport
     end
 
     def is_unsupported_downcase?
-      UNSUPPORTED_CHARS[:downcase].include? self
+      UNSUPPORTED_CHARS[:downcase].include? chr
     end
 
     def is_unsupported_upcase?
-      UNSUPPORTED_CHARS[:upcase].include? self
+      UNSUPPORTED_CHARS[:upcase].include? chr
     end
 
     def is_unsupported?
