@@ -12,6 +12,7 @@ Turkish character support for some standard Ruby methods. This gem provide suppo
 * `String#swapcase`
 * `String#swapcase!`
 * `String#casecmp`
+* `Array#sort`
 
 Also gives you some new methods like:
 * `String#titleize`
@@ -70,6 +71,8 @@ Within the file which you added `using TurkishSupport` line to the top of the sc
   str             #=> "ismail"
 
   "merhaba".capitalize  #=> "Merhaba"
+
+  ["iki", "üç", "dört", "ılık", "iğne", "iyne"].sort #=> ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
 ```
 
 __Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:
