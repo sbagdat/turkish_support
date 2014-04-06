@@ -1,3 +1,4 @@
+module TurkishSupport
 UNSUPPORTED_CHARS = {
   downcase: 'çğıiöşü',
   upcase: 'ÇĞIİÖŞÜ'
@@ -17,3 +18,4 @@ NORMALIZED_CHARS = {
   'ü' => 'u',
   'Ü' => 'U'
 }
+end
