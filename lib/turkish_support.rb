@@ -8,6 +8,7 @@ require "turkish_support/string/capitalize"
 require "turkish_support/string/titleize"
 require "turkish_support/string/casecmp"
 require "turkish_support/string/swapcase"
+require "turkish_support/string/match"
 
 require "turkish_support/array/sort"
 

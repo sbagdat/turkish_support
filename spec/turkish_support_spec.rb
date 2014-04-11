@@ -148,6 +148,25 @@ module TurkishSupport
         end
       end
     end
+
+    describe "#match" do
+      it "matches Turkish characters when regex include '\\w'" do
+        expect('Aşağı'.match(/\w+/).to_s).to eq('Aşağı')
+        expect('Aşağı Ayrancı'.match(/^\w+\s\w+$/).to_s).to eq('Aşağı Ayrancı')
+      end
+
+      it "matches Turkish characters when regex include smallcase range" do
+        expect('aüvvağğ öövvaağ'.match(/^[a-z]+\s[a-z]+$/).to_s).to eq('aüvvağğ öövvaağ')
+      end
+
+      it "matches Turkish characters when regex include uppercase range" do
+        expect('BAĞCIlar'.match(/[A-Z]+/).to_s).to eq('BAĞCI')
+      end
+
+      it "doesn't match Turkish characters when regex include '\\w'" do
+        expect('Aşağı Ayrancı'.match(/\W+/).to_s).to eq(' ')
+      end
+    end
   end
 
   describe Array do

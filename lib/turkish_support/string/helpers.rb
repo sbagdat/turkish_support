@@ -21,6 +21,11 @@ module TurkishSupport
       unsupported_upcase? or unsupported_downcase?
     end
 
+    def transform_regex
+      MATCH_TRANSFORMATIONS.each { |k, v| self.gsub!(k, v) }
+      self
+    end
+
     alias_method :words, :split
   end
 end
