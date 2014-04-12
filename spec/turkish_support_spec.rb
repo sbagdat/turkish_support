@@ -103,6 +103,11 @@ module TurkishSupport
         result = downcased_turkish_alphabet.casecmp(upcased_turkish_alphabet)
         expect(result).to be_zero
       end
+
+      it "compares Turkish characters correctly" do
+        result = downcased_turkish_alphabet.casecmp(upcased_turkish_alphabet)
+        expect('sıtkı'.casecmp('SıTKI')).to eq(0)
+      end
     end
 
     describe "#titleize" do

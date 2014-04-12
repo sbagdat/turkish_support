@@ -3,22 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
 
-Turkish character support for some standard Ruby methods. This gem provide support for these methods:
-* `String#upcase`
-* `String#upcase!`
-* `String#downcase`
-* `String#downcase!`
-* `String#capitalize`
-* `String#capitalize!`
-* `String#swapcase`
-* `String#swapcase!`
-* `String#casecmp`
-* `Array#sort`
-* `Array#sort!`
-
-Also gives you some new methods like:
-* `String#titleize`
-* `String#titleize!`
+Turkish character support for some core ruby methods. This gem provide support for these methods: `String#upcase`,
+`String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, `Array#sort!`,
+and their destructive versions like `String#capitalize!`. It also gives you some bonus methods like `String#titleize`.
 
 ## Requirements
 
@@ -46,45 +33,128 @@ Or install it yourself as:
 
 After the installation of the gem, you should follow these steps.
 
-* You need require it.
+### Using with ruby
 
-__Note:__ If you are using a framework like Rails, you don't need to require, because it is already required by the framework.
+* Require the gem:
 
 ```ruby
   require TurkishSupport
 ```
 
-* Add `using TurkishSupport` line to the top of the scope, __not inside of any class or module__.
+* Add `using TurkishSupport` line to where you want to activate it.
 
 ```ruby
-  using   TurkishSupport
+  using TurkishSupport
+```
+
+Example usage on the terminal:
+
+```ruby
+$ require 'turkish_support'     #=> true
+$ using TurkishSupport          #=> main
+$ 'içel'.upcase                 #=> "İÇEL"
+```
+
+Example usage inside a class:
+
+```ruby
+require 'turkish_support'
+
+class Test
+  using TurkishSupport
+  def up_me(str)
+    str.upcase
+  end
+end
+
+Test.new.up_me('içel')  #=> "İÇEL"
+```
+
+### Using with rails
+
+__Note:__ You don't need to require, because it is already required by the rails.
+
+* In rails you must add `using TurkishSupport` line to the top of the scope, __not inside of any class or module__.
+
+```ruby
+  using TurkishSupport
+
+  class SampleModel
+    ...
+  end
 ```
 
 ## Examples
 
-Within the file which you added `using TurkishSupport` line to the top of the scope; you can use core methods like below:
+Within the file that you added `using TurkishSupport` line; you can use the core methods like below:
+
+__String#upcase__ and __String#upcase!__
 
 ```ruby
   str = 'Bağcılar'
-  str.upcase  #=> "BAĞCILAR"
-  str         #=> "Bağcılar"
 
-  str = "İSMAİL"
-  str.downcase!   #=> "ismail"
-  str             #=> "ismail"
+  str.upcase    #=> "BAĞCILAR"
+  str           #=> "Bağcılar"
 
-  "merhaba".capitalize  #=> "Merhaba"
-
-  ["iki", "üç", "dört", "ılık", "iğne", "iyne"].sort #=> ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
+  str.upcase!   #=> "BAĞCILAR"
+  str           #=> "BAĞCILAR"
 ```
 
-__Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:
+__String#downcase__ and __String#downcase!__
+
+```ruby
+  str = 'İSMAİL'
+  str.downcase    #=> "ismail"
+```
+
+__String#capitalize__ and __String#capitalize!__
+
+```ruby
+  str = 'türkÇE desteĞİ'
+  str.capitalize    #=> "Türkçe desteği"
+```
+
+__String#swapcase__ and __String#swapcase!__
+```ruby
+  'TuğÇE'.swapcase    #=> "tUĞçe"
+```
+
+__String#casecmp__
+```ruby
+  'sıtKI'.casecmp('SITkı')     #=> 0
+```
+
+__String#match__
+
+```ruby
+  'Aşağı'.match(/\w+/)                         #=> #<MatchData "Aşağı">
+  'Aşağı Ayrancı'.match(/^\w+\s\w+$/)          #=> #<MatchData "Aşağı Ayrancı">
+  'aüvvağğ öövvaağ'.match(/^[a-z]+\s[a-z]+$/)  #=> #<MatchData "aüvvağğ öövvaağ">
+  'BAĞCIlar'.match(/[A-Z]+/)                   #=> #<MatchData "BAĞCI">
+  'Aşağı Ayrancı'.match(/\W+/)                 #=> #<MatchData "">
+```
+
+__Array#sort__ and __Array#sort!__
+
+```ruby
+  %w(iki üç dört ılık iğne iyne).sort
+  #=> ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
+```
+
+__String#titleize__ and __String#titleize!__
+
+These methods are not core methods of ruby, but they are accepted as useful in most situation.
+
+```ruby
+  'türkÇE desteĞİ'.titleize    #=> "Türkçe Desteği"
+```
+
+__Important Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:
 
 ```ruby
   str = 'Bağcılar'
   str.send(:upcase)  #=> "BAğCıLAR"
 ```
-
 
 ## Contributing
 
