@@ -77,6 +77,11 @@ module TurkishSupport
           expect(capitalized_words).to eq(%w[Çamur Ihlamur İnsan Ördek Şahika Ümraniye])
         end
 
+        it "capitalizes the first character of a string and downcase others" do
+          capitalized_words = turkish_words.map{ |w| w.capitalize }
+          expect('türkÇE desteĞİ'.capitalize).to eq('Türkçe desteği')
+        end
+
         it "capitalizes the first character of an English string" do
           english_word = "spy"
           capitalized_string = english_word.capitalize
