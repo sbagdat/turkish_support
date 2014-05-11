@@ -1,6 +1,6 @@
 module TurkishSupport
-  DOWNCASED_ALPHABET = 'abcçdefgğhıijklmnoöprsştuüvyz'
-  UPCASED_ALPHABET   = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'
+  DOWNCASED_ALPHABET = 'abcçdefgğhıijklmnoöpqrsştuüvwxyz'
+  UPCASED_ALPHABET   = 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ'
 
   UNSUPPORTED_DOWNCASE_CHARS  = 'çğıiöşü'
   UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
