@@ -182,8 +182,8 @@ module TurkishSupport
   describe Array do
     let(:unsorted_array1) { %w(bağcılar bahçelievler şimdi çüNKÜ olmalı üç\ kere düş ılık duy) }
     let(:sorted_array1)   { %w(bağcılar bahçelievler çüNKÜ duy düş ılık olmalı şimdi üç\ kere) }
-    let(:unsorted_array2) { %w(iki üç dört ılık iğne iyne ul) }
-    let(:sorted_array2)   { %w(dört ılık iğne iki iyne ul üç) }
+    let(:unsorted_array2) { %w(iki Üç dört ılık İğne iyne Ul) }
+    let(:sorted_array2)   { %w(İğne Ul Üç dört ılık iki iyne) }
 
     describe "#sort" do
       context "with non-destructive version" do

@@ -4,7 +4,7 @@ module TurkishSupport
 
   UNSUPPORTED_DOWNCASE_CHARS  = 'çğıiöşü'
   UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
-  ORDERED_CHARS               = 'AaBbCcÇçDdEeFfGgĞğHhIıİiJjKkLlMmNnOoÖöPpQqRrSsŞşTtUuÜüVvWwXxYyZz'
+  ORDERED_CHARS               = UPCASED_ALPHABET + DOWNCASED_ALPHABET
 
   DESTRUCTIVE_STRING_METHODS  = %i(capitalize downcase swapcase titleize upcase)
   DESTRUCTIVE_ARRAY_METHODS   = %i(sort)
