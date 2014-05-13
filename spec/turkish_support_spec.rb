@@ -126,6 +126,11 @@ module TurkishSupport
           titleized = "mERHABA çAMUR iSMETOĞULLARI".titleize
           expect(titleized).to eq("Merhaba Çamur İsmetoğulları")
         end
+
+        it "support strings that include paranthesis" do
+          titleized = "rUBY roCkS (really!)".titleize
+          expect(titleized).to eq("Ruby Rocks (Really!)")
+        end
       end
 
       context "with destructive version" do
