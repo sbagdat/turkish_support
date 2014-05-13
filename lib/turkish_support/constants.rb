@@ -15,4 +15,6 @@ module TurkishSupport
     'a-z' => DOWNCASED_ALPHABET,
     'A-Z' => UPCASED_ALPHABET
   }
+
+  CONJUCTIONS = %w(ve ile veya)
 end

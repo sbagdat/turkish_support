@@ -143,10 +143,16 @@ __Array#sort__ and __Array#sort!__
 
 __String#titleize__ and __String#titleize!__
 
-These methods are not core methods of ruby, but they are accepted as useful in most situation.
+These methods are not core methods of ruby, but they are accepted as useful in most situations.
 
 ```ruby
-  'türkÇE desteĞİ'.titleize    #=> "Türkçe Desteği"
+  'türkÇE desteĞİ'.titleize           #=> "Türkçe Desteği"
+
+  # Parenthesis, quotes, etc. support
+  "rUBY roCkS... (really! 'tRUSt' ME)".titleize          #=> "Ruby Rocks... (Really! 'Trust' Me)"
+
+  # If you don't want to capitalize conjuctions, simply pass a false value as a parameter
+  "kerem VE aslı VeYa leyla İlE mecnun".titleize(false)  #=> "Kerem ve Aslı veya Leyla ile Mecnun"
 ```
 
 __Important Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:

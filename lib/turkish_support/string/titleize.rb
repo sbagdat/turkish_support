@@ -1,11 +1,14 @@
 module TurkishSupport
   refine String do
-    def titleize
+    def titleize(conjuctions=true)
       words.map do |w|
-        if w.start_with? '('
-          w[0] + w[1..-1].downcase.capitalize
+        w.downcase!
+        if CONJUCTIONS.include?(w) && !conjuctions
+          w
+        elsif w =~ /^[\("']/
+          w[0] + w[1..-1].capitalize
         else
-          w.downcase.capitalize
+          w.capitalize
         end
       end.join(' ')
     end

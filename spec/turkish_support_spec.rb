@@ -127,9 +127,14 @@ module TurkishSupport
           expect(titleized).to eq("Merhaba Çamur İsmetoğulları")
         end
 
-        it "support strings that include paranthesis" do
-          titleized = "rUBY roCkS (really!)".titleize
-          expect(titleized).to eq("Ruby Rocks (Really!)")
+        it "support strings that include paranthesis, quotes, etc." do
+          titleized = "rUBY roCkS... (really! 'tRUSt' ME)".titleize
+          expect(titleized).to eq("Ruby Rocks... (Really! 'Trust' Me)")
+        end
+
+        it "doesn't capitalize conjuctions when false passed" do
+          titleized = "kerem VE aslı VeYa leyla İlE mecnun".titleize(false)
+          expect(titleized).to eq("Kerem ve Aslı veya Leyla ile Mecnun")
         end
       end
 
