@@ -17,4 +17,5 @@ module TurkishSupport
   }
 
   CONJUCTIONS = %w(ve ile veya)
+  SPECIAL_CHARS = %(\("')
 end

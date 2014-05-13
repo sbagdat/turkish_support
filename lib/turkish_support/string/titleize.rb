@@ -3,9 +3,9 @@ module TurkishSupport
     def titleize(conjuctions=true)
       words.map do |w|
         w.downcase!
-        if CONJUCTIONS.include?(w) && !conjuctions
+        if w.conjuction? && !conjuctions
           w
-        elsif w =~ /^[\("']/
+        elsif w.start_with_a_special_char?
           w[0] + w[1..-1].capitalize
         else
           w.capitalize

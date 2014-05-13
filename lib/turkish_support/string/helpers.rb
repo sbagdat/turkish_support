@@ -26,6 +26,14 @@ module TurkishSupport
       self
     end
 
+    def conjuction?
+      CONJUCTIONS.include? self
+    end
+
+    def start_with_a_special_char?
+      self =~ /^[#{SPECIAL_CHARS}]/
+    end
+
     alias_method :words, :split
   end
 end
