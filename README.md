@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
+[![Gitter chat](https://badges.gitter.im/sbagdat/turkish_support.png)](https://gitter.im/sbagdat/turkish_support)
 
 Turkish character support for some core ruby methods. This gem provide support for these methods: `String#upcase`,
 `String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, `Array#sort!`,
