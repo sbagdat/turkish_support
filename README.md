@@ -5,8 +5,7 @@
 [![Gitter chat](https://badges.gitter.im/sbagdat/turkish_support.png)](https://gitter.im/sbagdat/turkish_support)
 
 Turkish character support for some core ruby methods. This gem provide support for these methods: `String#upcase`,
-`String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, `Array#sort!`,
-and their destructive versions like `String#capitalize!`. It also gives you some bonus methods like `String#titleize`.
+`String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, and their destructive versions like `Array#sort!` or `String#capitalize!`. It also gives you some bonus methods like `String#titleize`.
 
 ## Requirements
 
