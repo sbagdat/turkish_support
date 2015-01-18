@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
 [![Gitter chat](https://badges.gitter.im/sbagdat/turkish_support.png)](https://gitter.im/sbagdat/turkish_support)
 
-Turkish character support for some core ruby methods. This gem provide support for these methods: `String#upcase`,
+Turkish character support for some core ruby methods. This gem provide support for those methods: `String#upcase`,
 `String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, and their destructive versions like `Array#sort!` or `String#capitalize!`. It also gives you some bonus methods like `String#titleize`.
 
 ## Requirements
@@ -38,7 +38,7 @@ After the installation of the gem, you should follow these steps.
 * Require the gem:
 
 ```ruby
-  require TurkishSupport
+  require 'turkish_support'
 ```
 
 * Add `using TurkishSupport` line to where you want to activate it.
