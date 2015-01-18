@@ -47,14 +47,6 @@ After the installation of the gem, you should follow these steps.
   using TurkishSupport
 ```
 
-Example usage on the terminal:
-
-```ruby
-$ require 'turkish_support'     #=> true
-$ using TurkishSupport          #=> main
-$ 'içel'.upcase                 #=> "İÇEL"
-```
-
 Example usage inside a class:
 
 ```ruby
