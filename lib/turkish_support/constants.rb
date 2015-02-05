@@ -10,8 +10,8 @@ module TurkishSupport
   DESTRUCTIVE_ARRAY_METHODS   = %i(sort)
 
   MATCH_TRANSFORMATIONS = {
-    '\w' => "[#{'\w'}#{UNSUPPORTED_DOWNCASE_CHARS}#{UNSUPPORTED_UPCASE_CHARS}]",
-    '\W' => "[#{'^\w\d_'}#{UNSUPPORTED_DOWNCASE_CHARS}#{UNSUPPORTED_UPCASE_CHARS}]",
+    '\w' => '[\p{Latin}\d_]',
+    '\W' => '[^\p{Latin}\d_]',
     'a-z' => DOWNCASED_ALPHABET,
     'A-Z' => UPCASED_ALPHABET
   }

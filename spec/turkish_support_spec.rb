@@ -4,7 +4,7 @@ using TurkishSupport
 module TurkishSupport
   describe VERSION do
     it 'should have a version number' do
-      TurkishSupport::VERSION.should_not be_nil
+      expect(TurkishSupport::VERSION).to_not eq(nil)
     end
   end
 

@@ -23,7 +23,7 @@ module TurkishSupport
 
     def transform_regex
       MATCH_TRANSFORMATIONS.each { |k, v| self.gsub!(k, v) }
-      self
+      self.force_encoding("UTF-8")
     end
 
     def conjuction?

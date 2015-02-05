@@ -1,11 +1,10 @@
 module TurkishSupport
   refine String do
     def match(pattern)
-      if pattern.kind_of? Regexp
-        pattern = pattern.inspect[1...-1]
-        pattern = Regexp.new(pattern.transform_regex)
-      end
-      send(:match, pattern)
+      Regexp.new(pattern) unless pattern.kind_of? Regexp
+      pattern, options = pattern.source, pattern.options
+      pattern = Regexp.new(pattern.transform_regex, Regexp::FIXEDENCODING | options)
+      public_send(:match, pattern)
     end
   end
 end
