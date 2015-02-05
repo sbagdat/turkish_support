@@ -175,7 +175,7 @@ module TurkishSupport
         expect('Aşağı Ayrancı'.match(/^\w+\s\w+$/).to_s).to eq('Aşağı Ayrancı')
       end
 
-      it "matches Turkish characters when regex include smallcase range" do
+      it "matches Turkish characters when regex include lowercase range" do
         expect('aüvvağğ öövvaağ'.match(/^[a-z]+\s[a-z]+$/).to_s).to eq('aüvvağğ öövvaağ')
       end
 
@@ -183,8 +183,46 @@ module TurkishSupport
         expect('BAĞCIlar'.match(/[A-Z]+/).to_s).to eq('BAĞCI')
       end
 
-      it "doesn't match Turkish characters when regex include '\\w'" do
+      it "doesn't match Turkish characters when regex include '\\W'" do
         expect('Aşağı Ayrancı'.match(/\W+/).to_s).to eq(' ')
+      end
+    end
+
+    describe "#scan" do
+      it "matches Turkish characters when regex include '\\w'" do
+        expect(turkish_words.join(' ').scan(/\w+/)).to eq(turkish_words)
+      end
+
+      it "matches Turkish characters when regex include lowercase range" do
+        expect(turkish_words.join(' ').scan(/^[a-z\s]+$/)).to eq([turkish_words.join(' ')])
+      end
+
+      it "matches Turkish characters when regex include uppercase range" do
+        expect(turkish_words.join(' ').upcase.scan(/^[A-Z\s]+$/)).to eq([turkish_words.join(' ').upcase])
+      end
+
+      it "matches Turkish characters when regex include '\\w'" do
+        expect(turkish_words.join(' ').scan(/\W+/).map(&:strip).all?(&:empty?)).to eq(true)
+      end
+    end
+
+    describe "#=~" do
+      tr_chars = UNSUPPORTED_DOWNCASE_CHARS+UNSUPPORTED_UPCASE_CHARS
+
+      it "matches Turkish characters when regex include '\\w'" do
+        expect(tr_chars.split(//).all? {|ch| (ch =~ /\w/) == 0}).to eq(true)
+      end
+
+      it "matches Turkish characters when regex include lowercase range" do
+        expect(UNSUPPORTED_DOWNCASE_CHARS.split(//).all? {|ch| (ch =~ /[a-z]/) == 0}).to eq(true)
+      end
+
+      it "matches Turkish characters when regex include uppercase range" do
+        expect(UNSUPPORTED_UPCASE_CHARS.split(//).all? {|ch| (ch =~ /[A-Z]/) == 0}).to eq(true)
+      end
+
+      it "doesn't match Turkish characters when regex include '\\W'" do
+        expect(tr_chars.split(//).all? {|ch| (ch =~ /\W/).nil?}).to eq(true)
       end
     end
   end

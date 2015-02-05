@@ -1,6 +1,5 @@
 module TurkishSupport
   refine String do
-
     def change_chars_for_upcase
       tr UNSUPPORTED_DOWNCASE_CHARS, UNSUPPORTED_UPCASE_CHARS
     end
