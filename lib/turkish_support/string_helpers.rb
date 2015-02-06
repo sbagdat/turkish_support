@@ -24,11 +24,6 @@ module TurkishSupport
       unsupported_upcase? or unsupported_downcase?
     end
 
-    def transform_regex
-      MATCH_TRANSFORMATIONS.each { |k, v| self.gsub!(k, v) }
-      self.force_encoding("UTF-8")
-    end
-
     def conjuction?
       CONJUCTIONS.include? self
     end
@@ -38,5 +33,17 @@ module TurkishSupport
     end
 
     alias_method :words, :split
+  end
+end
+
+module TurkishSupport
+  def self.translate_regexp(pattern)
+    Regexp.new(pattern) unless pattern.is_a? Regexp
+    pattern, options = pattern.source, pattern.options
+
+    MATCH_TRANSFORMATIONS.each { |k, v| pattern.gsub!(k, v) }
+    pattern.force_encoding("UTF-8")
+
+    pattern = Regexp.new(pattern, Regexp::FIXEDENCODING | options)
   end
 end

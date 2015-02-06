@@ -18,4 +18,6 @@ module TurkishSupport
 
   CONJUCTIONS = %w(ve ile veya)
   SPECIAL_CHARS = %(\("')
+
+  REGEXP_USED_METHODS = %i(match scan =~)
 end

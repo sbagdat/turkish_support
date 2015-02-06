@@ -36,12 +36,10 @@ module TurkishSupport
       upcase.public_send(:casecmp, other_string.upcase)
     end
 
-    %i[match scan =~].each do |method_name|
-      define_method(method_name) do |pattern|
-        Regexp.new(pattern) unless pattern.kind_of? Regexp
-        pattern, options = pattern.source, pattern.options
-        pattern = Regexp.new(pattern.transform_regex, Regexp::FIXEDENCODING | options)
-        public_send(method_name, pattern)
+    REGEXP_USED_METHODS.each do |method_name|
+      define_method(method_name) do |*args|
+        args[0] = TurkishSupport.translate_regexp(args.first)
+        public_send(method_name, *args)
       end
     end
   end
