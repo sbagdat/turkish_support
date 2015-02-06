@@ -6,7 +6,7 @@ module TurkishSupport
   UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
   ORDERED_CHARS               = UPCASED_ALPHABET + DOWNCASED_ALPHABET
 
-  DESTRUCTIVE_STRING_METHODS  = %i(capitalize downcase swapcase titleize upcase)
+  DESTRUCTIVE_STRING_METHODS  = %i(swapcase titleize)
   DESTRUCTIVE_ARRAY_METHODS   = %i(sort)
 
   MATCH_TRANSFORMATIONS = {
