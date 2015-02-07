@@ -45,12 +45,5 @@ module TurkishSupport
     def casecmp(other_string)
       upcase.public_send(:casecmp, other_string.upcase)
     end
-
-    # (REGEXP_REQUIRED_METHODS + REGEXP_OPTIONAL_METHODS).each do |method_name|
-    #   define_method(method_name) do |*args|
-    #     args[0] = TurkishSupport.translate_regexp(args.first)
-    #     public_send(method_name, *args)
-    #   end
-    # end
   end
 end
