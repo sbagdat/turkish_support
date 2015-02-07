@@ -55,6 +55,19 @@ module TurkishSupport
       end
     end
 
+    describe "#partition" do
+      let(:word1)     { turkish_words.sample }
+      let(:word2)     { turkish_words.sample }
+      let(:two_words) { "#{word1} #{word2}" }
+      it "does not change the original value of the string" do
+        expect{ two_words.partition(/\W+/) }.to_not change{ two_words }
+      end
+
+      it "is able to capture Turkish characters" do
+        expect( two_words.partition(/\W+/) ).to eq([word1, ' ', word2])
+      end
+    end
+
     describe "#upcase" do
       context "with non-destructive version" do
         it "does not change the original value of the string" do
