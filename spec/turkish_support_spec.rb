@@ -15,6 +15,29 @@ module TurkishSupport
     let(:upcased_english_alphabet)   { [*'A'..'Z'].join }
     let(:turkish_words)              {  %w(çamur ıhlamur insan ördek şahika ümraniye) }
 
+    describe "#[]" do
+      context "with non-destructive version" do
+        it "does not change the original value of the string" do
+          word = turkish_words.sample
+          expect{ word[/\w+/] }.to_not change{ word }
+        end
+
+        it "is able to capture Turkish characters" do
+          expect( turkish_words.all? { |w| w[/\w+/]    == w } ).to                eq(true)
+          expect( turkish_words.all? { |w| w[/[a-z]+/] == w } ).to                eq(true)
+          expect( turkish_words.map(&:upcase).all? { |w| w[/[a-z]+/i] == w } ).to eq(true)
+        end
+      end
+
+      context "with destructive version" do
+        it "changes the original value of the string" do
+          word = turkish_words.sample
+          expect{ word[/\w+/]='new value' }.to change{ word }
+          expect(word).to eq('new value')
+        end
+      end
+    end
+
     describe "#upcase" do
       context "with non-destructive version" do
         it "does not change the original value of the string" do

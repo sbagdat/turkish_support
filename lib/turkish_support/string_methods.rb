@@ -1,5 +1,12 @@
 module TurkishSupport
   refine String do
+    %i([] []=).each do |method_name|
+      define_method method_name do |*args|
+        args[0] = TurkishSupport.translate_regexp(args[0]) if args[0].is_a? Regexp
+        super(*args)
+      end
+    end
+
     %i{downcase downcase! upcase upcase! capitalize capitalize!}.each do |method_name|
       non_destructive_method_name = method_name.to_s.chomp('!')
       helper_method = instance_method("change_chars_for_#{non_destructive_method_name}")
