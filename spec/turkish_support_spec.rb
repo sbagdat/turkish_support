@@ -23,8 +23,8 @@ module TurkishSupport
         end
 
         it "is able to capture Turkish characters" do
-          expect( turkish_words.all? { |w| w[/\w+/]    == w } ).to                eq(true)
-          expect( turkish_words.all? { |w| w[/[a-z]+/] == w } ).to                eq(true)
+          expect( turkish_words.all? { |w| w[/\w+/]    == w } ).to eq(true)
+          expect( turkish_words.all? { |w| w[/[a-z]+/] == w } ).to eq(true)
           expect( turkish_words.map(&:upcase).all? { |w| w[/[a-z]+/i] == w } ).to eq(true)
         end
       end
@@ -35,6 +35,23 @@ module TurkishSupport
           expect{ word[/\w+/]='new value' }.to change{ word }
           expect(word).to eq('new value')
         end
+      end
+    end
+
+    describe "#index" do
+      it "does not change the original value of the string" do
+        word = turkish_words.sample
+        expect{ word.index(/\w+/) }.to_not change{ word }
+      end
+
+      it "is able to capture Turkish characters" do
+        expect( turkish_words.all? { |w| w.index(/\w+/)    == 0 } ).to eq(true)
+        expect( turkish_words.all? { |w| w.index(/[a-z]+/) == 0 } ).to eq(true)
+        expect( turkish_words.map(&:upcase).all? { |w| w.index(/[a-z]+/i) == 0 } ).to eq(true)
+      end
+
+      it "begins to search from the right position" do
+        expect( 'şç-!+*/-ğüı'.index(/\w+/, 2) ).to eq(8)
       end
     end
 

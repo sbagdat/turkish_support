@@ -1,6 +1,6 @@
 module TurkishSupport
   refine String do
-    %i([] []=).each do |method_name|
+    %i([] []= index).each do |method_name|
       define_method method_name do |*args|
         args[0] = TurkishSupport.translate_regexp(args[0]) if args[0].is_a? Regexp
         super(*args)
