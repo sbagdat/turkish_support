@@ -55,6 +55,23 @@ module TurkishSupport
       end
     end
 
+    describe "#rindex" do
+      it "does not change the original value of the string" do
+        word = turkish_words.sample
+        expect{ word.rindex(/\w+/) }.to_not change{ word }
+      end
+
+      it "is able to capture Turkish characters" do
+        expect( turkish_words.map(&:reverse).all? { |w| w.rindex(/\w+/) == w.size - 1 } ).to eq(true)
+        expect( turkish_words.map(&:reverse).all? { |w| w.rindex(/[a-z]+/) == w.size - 1 } ).to eq(true)
+        expect( turkish_words.map(&:upcase).map(&:reverse).all? { |w| w.rindex(/[a-z]+/i) == w.size - 1 } ).to eq(true)
+      end
+
+      it "finishes the searching to the right position" do
+        expect( 'şç-!+*/-ğüı'.rindex(/\w+/, 7) ).to eq(1)
+      end
+    end
+
     describe "#partition" do
       let(:word1)     { turkish_words.sample }
       let(:word2)     { turkish_words.sample }
