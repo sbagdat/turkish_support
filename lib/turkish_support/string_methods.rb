@@ -1,8 +1,11 @@
 module TurkishSupport
   refine String do
-    %i([] []= index).each do |method_name|
-      define_method method_name do |*args|
-        args[0] = TurkishSupport.translate_regexp(args[0]) if args[0].is_a? Regexp
+    (REGEXP_REQUIRED_METHODS + REGEXP_OPTIONAL_METHODS).each do |meth|
+      define_method meth do |*args|
+        if REGEXP_REQUIRED_METHODS.include?(meth) || (REGEXP_OPTIONAL_METHODS.include?(meth) && args[0].is_a?(Regexp))
+          args[0] = TurkishSupport.translate_regexp(args[0])
+        end
+
         super(*args)
       end
     end
@@ -43,11 +46,11 @@ module TurkishSupport
       upcase.public_send(:casecmp, other_string.upcase)
     end
 
-    REGEXP_USED_METHODS.each do |method_name|
-      define_method(method_name) do |*args|
-        args[0] = TurkishSupport.translate_regexp(args.first)
-        public_send(method_name, *args)
-      end
-    end
+    # (REGEXP_REQUIRED_METHODS + REGEXP_OPTIONAL_METHODS).each do |method_name|
+    #   define_method(method_name) do |*args|
+    #     args[0] = TurkishSupport.translate_regexp(args.first)
+    #     public_send(method_name, *args)
+    #   end
+    # end
   end
 end
