@@ -85,7 +85,7 @@ module TurkishSupport
       end
     end
 
-    describe "#partition" do
+    describe "#rpartition" do
       let(:word1)     { turkish_words.sample }
       let(:word2)     { turkish_words.sample }
       let(:word3)     { turkish_words.sample }
@@ -96,6 +96,29 @@ module TurkishSupport
 
       it "is able to capture Turkish characters" do
         expect( three_words.rpartition(/\W+/) ).to eq(["#{word1} #{word2}", ' ', word3])
+      end
+    end
+
+    describe "#slice" do
+      context "with non-destructive version" do
+        it "does not change the original value of the string" do
+          sentence = turkish_words * ' '
+          expect{ sentence.slice(/\w+/) }.to_not change{ sentence }
+        end
+
+        it "is able to capture Turkish characters" do
+          expect( turkish_words.all? { |w| w.slice(/\w+/) == w } ).to eq(true)
+          expect( turkish_words.all? { |w| w.slice(/[a-z]+/)    == w } ).to eq(true)
+          expect( turkish_words.map(&:upcase).all? { |w| w.slice(/[a-z]+/i) == w } ).to eq(true)
+        end
+      end
+
+      context "with destructive version" do
+        it "changes the original value of the string" do
+          sentence = turkish_words * ' '
+          expect{ sentence.slice!(/\w+/) }.to change{ sentence }
+          expect(sentence).to eq(' ' + turkish_words[1..-1]*' ')
+        end
       end
     end
 

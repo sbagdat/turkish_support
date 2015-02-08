@@ -20,5 +20,5 @@ module TurkishSupport
   SPECIAL_CHARS = %(\("')
 
   REGEXP_REQUIRED_METHODS = %i(match scan)
-  REGEXP_OPTIONAL_METHODS = %i([] []= index =~ partition rindex rpartition)
+  REGEXP_OPTIONAL_METHODS = %i([] []= index =~ partition rindex rpartition slice slice!)
 end
