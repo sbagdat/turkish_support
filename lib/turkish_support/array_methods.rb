@@ -9,5 +9,9 @@ module TurkishSupport
         end
       end
     end
+
+    def sort!
+      replace(sort)
+    end
   end
 end

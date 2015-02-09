@@ -16,9 +16,6 @@ module TurkishSupportHelpers
 
   ORDERED_CHARS               = UPCASED_ALPHABET + DOWNCASED_ALPHABET
 
-  DESTRUCTIVE_STRING_METHODS  = %i(swapcase titleize)
-  DESTRUCTIVE_ARRAY_METHODS   = %i(sort)
-
   CONJUCTIONS = %w(ve ile veya)
   SPECIAL_CHARS = %(\("')
 end

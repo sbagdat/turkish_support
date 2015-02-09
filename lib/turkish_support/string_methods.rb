@@ -33,6 +33,10 @@ module TurkishSupport
       end.join(' ')
     end
 
+    def titleize!(conjuctions=true)
+      replace(titleize)
+    end
+
     def swapcase
       chars.map do |ch|
         if ch.unsupported?
@@ -41,6 +45,10 @@ module TurkishSupport
           ch.public_send(:swapcase)
         end
       end.join
+    end
+
+    def swapcase!(conjuctions=true)
+      replace(swapcase)
     end
 
     def casecmp(other_string)
