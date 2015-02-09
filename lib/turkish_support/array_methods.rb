@@ -3,7 +3,7 @@ module TurkishSupport
     def sort
       sort_by do |item|
         if item.is_a?(String)
-          item.chars.map { |ch| ORDERED_CHARS.index(ch) }
+          item.chars.map { |ch| ALPHABET.index(ch) }
         else
           super
         end

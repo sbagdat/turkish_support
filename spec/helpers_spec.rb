@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'turkish_support/turkish_support_helpers'
+require 'turkish_support/helpers'
 
 RSpec.configure do |config|
   config.include TurkishSupportHelpers

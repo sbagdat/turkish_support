@@ -1,9 +1,10 @@
 module TurkishSupport
   refine String do
-    (REGEXP_REQUIRED_METHODS + REGEXP_OPTIONAL_METHODS).each do |meth|
+    (RE_RE_METHS + RE_OP_METHS).each do |meth|
       define_method meth do |*args|
         extend(TurkishSupportHelpers)
-        if REGEXP_REQUIRED_METHODS.include?(meth) || (REGEXP_OPTIONAL_METHODS.include?(meth) && args[0].is_a?(Regexp))
+
+        if RE_RE_METHS.include?(meth) || args[0].is_a?(Regexp)
           args[0] = translate_regexp(args[0])
         end
 
@@ -11,16 +12,16 @@ module TurkishSupport
       end
     end
 
-    %i{downcase downcase! upcase upcase! capitalize capitalize!}.each do |method_name|
-      non_destructive_method_name = method_name.to_s.chomp('!')
-      helper_method = instance_method("change_chars_for_#{non_destructive_method_name}")
-      define_method(method_name) do
-        str = helper_method.bind(self).call.public_send(non_destructive_method_name)
-        return method_name.to_s.end_with?('!') ? public_send(:replace, str) : str
+    %i(downcase downcase! upcase upcase! capitalize capitalize!).each do |meth|
+      non_destructive = meth.to_s.chomp('!')
+      helper_method = instance_method("change_chars_for_#{non_destructive}")
+      define_method(meth) do
+        str = helper_method.bind(self).call.public_send(non_destructive)
+        return meth.to_s.end_with?('!') ? public_send(:replace, str) : str
       end
     end
 
-    def titleize(conjuctions=true)
+    def titleize(conjuctions = true)
       words.map do |word|
         word.downcase!
         if word.conjuction? && !conjuctions
@@ -33,8 +34,8 @@ module TurkishSupport
       end.join(' ')
     end
 
-    def titleize!(conjuctions=true)
-      replace(titleize)
+    def titleize!(conjuctions = true)
+      replace(titleize(conjuctions))
     end
 
     def swapcase
@@ -47,7 +48,7 @@ module TurkishSupport
       end.join
     end
 
-    def swapcase!(conjuctions=true)
+    def swapcase!
       replace(swapcase)
     end
 

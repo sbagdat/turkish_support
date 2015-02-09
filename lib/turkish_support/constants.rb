@@ -1,21 +1,50 @@
 module TurkishSupportHelpers
-  DOWNCASED_ALPHABET = 'abcçdefgğhıijklmnoöpqrsştuüvwxyz'
-  UPCASED_ALPHABET   = 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ'
-  ALPHABET = DOWNCASED_ALPHABET + UPCASED_ALPHABET
+  ALPHA = {
+    lower: 'abcçdefgğhıijklmnoöpqrsştuüvwxyz',
+    upper: 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ'
+  }
+
+  ALPHABET = ALPHA[:upper] + ALPHA[:lower]
 
   UNSUPPORTED_DOWNCASE_CHARS  = 'çğıiöşü'
   UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
 
-  MATCH_TRANSFORMATIONS = {
+  META_CHARS = {
     '\w' => '[\p{Latin}\d_]',
     '\W' => '[^\p{Latin}\d_]'
   }
 
-  REGEXP_REQUIRED_METHODS = %i(match scan)
-  REGEXP_OPTIONAL_METHODS = %i([] []= index =~ partition rindex rpartition slice slice! split)
+  # Regexp required methods
+  RE_RE_METHS = %i(
+                    match
+                    scan
+                  )
 
-  ORDERED_CHARS               = UPCASED_ALPHABET + DOWNCASED_ALPHABET
+  # Regexp optional methods
+  RE_OP_METHS = %i(
+                    []
+                    []=
+                    =~
+                    index
+                    rindex
+                    partition
+                    rpartition
+                    slice
+                    slice!
+                    split
+                    sub
+                    sub!
+                    gsub
+                    gsub!
+                  )
 
-  CONJUCTIONS = %w(ve ile veya)
+  RANGE_REGEXP = /\[(?:.*?)([#{ALPHABET}]-[#{ALPHABET}])|([#{ALPHABET}]-[#{ALPHABET}])(?:.*?)\]/
+
+  CONJUCTIONS = %w(
+                    ve
+                    ile
+                    veya
+                  )
+
   SPECIAL_CHARS = %(\("')
 end

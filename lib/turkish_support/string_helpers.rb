@@ -21,7 +21,7 @@ module TurkishSupport
     end
 
     def unsupported?
-      unsupported_upcase? or unsupported_downcase?
+      unsupported_upcase? || unsupported_downcase?
     end
 
     def conjuction?
@@ -35,26 +35,3 @@ module TurkishSupport
     alias_method :words, :split
   end
 end
-
-# module TurkishSupport
-#   def self.translate_regexp(pattern)
-#     Regexp.new(pattern) unless pattern.is_a? Regexp
-#     casefold = pattern.casefold?
-#     pattern, options = pattern.source, pattern.options
-
-#     range_regexp = /\[(?:.*?)([#{ALPHABET}]-[#{ALPHABET}])|([#{ALPHABET}]-[#{ALPHABET}])(?:.*?)\]/
-
-#     while pattern.match(range_regexp)
-#       pattern.scan(range_regexp).flatten.compact.each do |matching|
-#         pattern.gsub! matching, translate_range(matching, casefold)
-#       end
-#     end
-
-#     MATCH_TRANSFORMATIONS.each do |k, v|
-#       pattern.gsub!(k, v)
-#     end
-#     pattern.force_encoding("UTF-8")
-
-#     Regexp.new(pattern, Regexp::FIXEDENCODING | options)
-#   end
-# end

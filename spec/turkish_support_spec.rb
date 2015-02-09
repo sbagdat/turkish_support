@@ -344,6 +344,51 @@ module TurkishSupport
         expect(tr_chars.split(//).all? {|ch| (ch =~ /\W/).nil?}).to eq(true)
       end
     end
+
+    describe "#sub" do
+      context "non-destructive version" do
+        it "does not affect the object" do
+          word = 'ağapaşa ağa'
+          expect{ word.sub(/\w+/, 'bey') }.to_not change{ word}
+        end
+
+        it "matches Turkish characters, and replaces them" do
+          expect('ağapaşa ağa'.sub(/\w+/, 'bey')).to eq('bey ağa')
+          expect('ağapaşa ağa şapka'.sub(/\W+/, 'bey')).to eq('ağapaşabeyağa şapka')
+          expect('ağapaşaağa'.sub(/[a-h]+/, 'bey')).to eq('beypaşaağa')
+        end
+      end
+
+      context "destructive version" do
+        it "affects the object" do
+          word = 'ağapaşa ağa'
+          expect{ word.sub!(/\w+/, 'bey') }.to change{ word }.from('ağapaşa ağa').to('bey ağa')
+        end
+      end
+    end
+
+    describe "#gsub" do
+      context "non-destructive version" do
+        it "does not affect the object" do
+          word = 'ağapaşa ağa'
+          expect{ word.gsub(/\w+/, 'bey') }.to_not change{ word}
+        end
+
+        it "matches Turkish characters, and replaces them" do
+          expect('ağapaşa ağa'.gsub(/\w+/, 'bey')).to eq('bey bey')
+          expect('ağapaşa ağa şapka'.gsub(/\W+/, 'bey')).to eq('ağapaşabeyağabeyşapka')
+          expect('ağapaşaağa'.gsub(/[a-h]+/, 'bey')).to eq('beypbeyşbey')
+        end
+      end
+
+      context "destructive version" do
+        it "affects the object" do
+          word = 'ağapaşa ağa'
+          expect{ word.gsub!(/\w+/, 'bey') }.to change{ word }.from('ağapaşa ağa').to('bey bey')
+        end
+      end
+    end
+
   end
 
   describe Array do
