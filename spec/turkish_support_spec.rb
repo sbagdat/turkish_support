@@ -122,6 +122,18 @@ module TurkishSupport
       end
     end
 
+    describe "#split" do
+      it "returns an array" do
+        expect(turkish_words.join(' ').split(/\w+/)).to be_an_instance_of(Array)
+      end
+
+      it "is able to capture Turkish characters" do
+        expect( turkish_words.join(' ').split(/\w+/).join.strip.empty? ).to eq(true)
+        expect( turkish_words.join(' ').split(/[a-z]+/).join.strip.empty? ).to eq(true)
+        expect( turkish_words.join(' ').upcase.split(/[a-z]+/i).join.strip.empty? ).to eq(true)
+      end
+    end
+
     describe "#upcase" do
       context "with non-destructive version" do
         it "does not change the original value of the string" do

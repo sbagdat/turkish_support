@@ -36,14 +36,25 @@ module TurkishSupport
   end
 end
 
-module TurkishSupport
-  def self.translate_regexp(pattern)
-    Regexp.new(pattern) unless pattern.is_a? Regexp
-    pattern, options = pattern.source, pattern.options
+# module TurkishSupport
+#   def self.translate_regexp(pattern)
+#     Regexp.new(pattern) unless pattern.is_a? Regexp
+#     casefold = pattern.casefold?
+#     pattern, options = pattern.source, pattern.options
 
-    MATCH_TRANSFORMATIONS.each { |k, v| pattern.gsub!(k, v) }
-    pattern.force_encoding("UTF-8")
+#     range_regexp = /\[(?:.*?)([#{ALPHABET}]-[#{ALPHABET}])|([#{ALPHABET}]-[#{ALPHABET}])(?:.*?)\]/
 
-    pattern = Regexp.new(pattern, Regexp::FIXEDENCODING | options)
-  end
-end
+#     while pattern.match(range_regexp)
+#       pattern.scan(range_regexp).flatten.compact.each do |matching|
+#         pattern.gsub! matching, translate_range(matching, casefold)
+#       end
+#     end
+
+#     MATCH_TRANSFORMATIONS.each do |k, v|
+#       pattern.gsub!(k, v)
+#     end
+#     pattern.force_encoding("UTF-8")
+
+#     Regexp.new(pattern, Regexp::FIXEDENCODING | options)
+#   end
+# end
