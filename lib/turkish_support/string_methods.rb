@@ -14,19 +14,19 @@ module TurkishSupport
 
     %i(downcase downcase! upcase upcase! capitalize capitalize!).each do |meth|
       non_destructive = meth.to_s.chomp('!')
-      helper_method = instance_method("change_chars_for_#{non_destructive}")
       define_method(meth) do
-        str = helper_method.bind(self).call.public_send(non_destructive)
+        extend(TurkishSupportHelpers)
+        str = prepare_for(non_destructive, self).public_send(non_destructive)
         return meth.to_s.end_with?('!') ? public_send(:replace, str) : str
       end
     end
 
     def titleize(conjuctions = true)
-      words.map do |word|
+      split.map do |word|
         word.downcase!
-        if word.conjuction? && !conjuctions
+        if conjuction?(word) && !conjuctions
           word
-        elsif word.start_with_a_special_char?
+        elsif start_with_a_special_char?(word)
           word.chr + word[1..-1].capitalize
         else
           word.capitalize
@@ -39,9 +39,10 @@ module TurkishSupport
     end
 
     def swapcase
+      extend(TurkishSupportHelpers)
       chars.map do |ch|
-        if ch.unsupported?
-          ch.unsupported_downcase? ? ch.upcase : ch.downcase
+        if tr_char?(ch)
+          tr_lower?(ch) ? ch.upcase : ch.downcase
         else
           ch.public_send(:swapcase)
         end

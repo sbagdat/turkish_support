@@ -20,7 +20,46 @@ module TurkishSupportHelpers
     expand_range(first, last, casefold)
   end
 
+  def prepare_for(meth, string)
+    method("prepare_for_#{meth}").call(string)
+  end
+
+  def tr_char?(ch)
+    tr_lower?(ch) || tr_upper?(ch)
+  end
+
+  def tr_lower?(ch)
+    ALPHA[:tr_lower].include? ch
+  end
+
+  def tr_upper?(ch)
+    ALPHA[:tr_upper].include? ch
+  end
+
+  def conjuction?(string)
+    CONJUCTIONS.include? string
+  end
+
+  def start_with_a_special_char?(string)
+    string =~ /^[#{SPECIAL_CHARS}]/
+  end
+
   private
+
+  def prepare_for_upcase(string)
+    string.tr(ALPHA[:tr_lower], ALPHA[:tr_upper])
+  end
+
+  def prepare_for_downcase(string)
+    string.tr(ALPHA[:tr_upper], ALPHA[:tr_lower])
+  end
+
+  def prepare_for_capitalize(string)
+    [
+     prepare_for(:upcase, string.chr).upcase,
+     prepare_for(:downcase, self[1..-1]).downcase
+    ].join
+  end
 
   def expand_range(first, last, casefold)
     if lower.include?(first) && lower.include?(last)
@@ -34,13 +73,13 @@ module TurkishSupportHelpers
 
   def downcase_range(first, last, casefold)
     range = lower[lower.index(first)..lower.index(last)]
-    range << upper[lower.index(first)..lower.index(last)].gsub(/[^#{UNSUPPORTED_UPCASE_CHARS}]/, '') if casefold
+    range << upper[lower.index(first)..lower.index(last)].gsub(/[^#{ALPHA[:tr_upper]}]/, '') if casefold
     range
   end
 
   def upcase_range(first, last, casefold)
     r = upper[upper.index(first)..upper.index(last)]
-    r << lower[upper.index(first)..upper.index(last)].gsub(/[^#{UNSUPPORTED_DOWNCASE_CHARS}]/, '') if casefold
+    r << lower[upper.index(first)..upper.index(last)].gsub(/[^#{ALPHA[:tr_lower]}]/, '') if casefold
     r
   end
 

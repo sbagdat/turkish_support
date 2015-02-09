@@ -1,13 +1,12 @@
 module TurkishSupportHelpers
   ALPHA = {
-    lower: 'abcçdefgğhıijklmnoöpqrsştuüvwxyz',
-    upper: 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ'
+    lower:    'abcçdefgğhıijklmnoöpqrsştuüvwxyz',
+    upper:    'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ',
+    tr_lower:  'çğıiöşü',
+    tr_upper:  'ÇĞIİÖŞÜ'
   }
 
   ALPHABET = ALPHA[:upper] + ALPHA[:lower]
-
-  UNSUPPORTED_DOWNCASE_CHARS  = 'çğıiöşü'
-  UNSUPPORTED_UPCASE_CHARS    = 'ÇĞIİÖŞÜ'
 
   META_CHARS = {
     '\w' => '[\p{Latin}\d_]',

@@ -326,18 +326,18 @@ module TurkishSupport
     end
 
     describe "#=~" do
-      tr_chars = UNSUPPORTED_DOWNCASE_CHARS+UNSUPPORTED_UPCASE_CHARS
+      tr_chars = ALPHA[:tr_lower] + ALPHA[:tr_upper]
 
       it "matches Turkish characters when regex include '\\w'" do
         expect(tr_chars.split(//).all? {|ch| (ch =~ /\w/) == 0}).to eq(true)
       end
 
       it "matches Turkish characters when regex include lowercase range" do
-        expect(UNSUPPORTED_DOWNCASE_CHARS.split(//).all? {|ch| (ch =~ /[a-z]/) == 0}).to eq(true)
+        expect(ALPHA[:tr_lower].split(//).all? {|ch| (ch =~ /[a-z]/) == 0}).to eq(true)
       end
 
       it "matches Turkish characters when regex include uppercase range" do
-        expect(UNSUPPORTED_UPCASE_CHARS.split(//).all? {|ch| (ch =~ /[A-Z]/) == 0}).to eq(true)
+        expect(ALPHA[:tr_upper].split(//).all? {|ch| (ch =~ /[A-Z]/) == 0}).to eq(true)
       end
 
       it "doesn't match Turkish characters when regex include '\\W'" do
