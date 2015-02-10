@@ -12,8 +12,8 @@ module TurkishSupport
       end
     end
 
-    %i(downcase downcase! upcase upcase! capitalize capitalize!).each do |meth|
-      non_destructive = meth.to_s.chomp('!')
+    CASE_RELATED_METHS.each do |meth|
+      non_destructive = meth.to_s.chomp('!').to_sym
       define_method(meth) do
         extend(TurkishSupportHelpers)
         str = prepare_for(non_destructive, self).public_send(non_destructive)

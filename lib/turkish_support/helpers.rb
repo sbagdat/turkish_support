@@ -3,8 +3,12 @@ module TurkishSupportHelpers
     Regexp.new(pattern) unless pattern.is_a? Regexp
     re, options = pattern.source, pattern.options
 
-    re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
-      re.gsub! matching, translate_range(matching, pattern.casefold?)
+    puts re.inspect
+
+    while re.match(RANGE_REGEXP) do
+      re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
+        re.gsub! matching, translate_range(matching, pattern.casefold?)
+      end
     end
 
     META_CHARS.each { |k, v| re.gsub!(k, v) }
@@ -21,6 +25,11 @@ module TurkishSupportHelpers
   end
 
   def prepare_for(meth, string)
+    valid_meths = %i(upcase downcase capitalize)
+    unless valid_meths.include?(meth) && string.is_a?(String)
+      fail ArgumentError, 'Invalid arguments for method `prepare_for`!'
+    end
+
     method("prepare_for_#{meth}").call(string)
   end
 
@@ -72,14 +81,14 @@ module TurkishSupportHelpers
   end
 
   def downcase_range(first, last, casefold)
-    range = lower[lower.index(first)..lower.index(last)]
-    range << upper[lower.index(first)..lower.index(last)].gsub(/[^#{ALPHA[:tr_upper]}]/, '') if casefold
-    range
+    r = lower[lower.index(first)..lower.index(last)]
+    r << upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}") if casefold
+    r
   end
 
   def upcase_range(first, last, casefold)
     r = upper[upper.index(first)..upper.index(last)]
-    r << lower[upper.index(first)..upper.index(last)].gsub(/[^#{ALPHA[:tr_lower]}]/, '') if casefold
+    r << lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}") if casefold
     r
   end
 

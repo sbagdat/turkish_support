@@ -37,7 +37,16 @@ module TurkishSupportHelpers
                     gsub!
                   )
 
-  RANGE_REGEXP = /\[(?:.*?)([#{ALPHABET}]-[#{ALPHABET}])|([#{ALPHABET}]-[#{ALPHABET}])(?:.*?)\]/
+  CASE_RELATED_METHS = %i(
+                           downcase
+                           downcase!
+                           upcase
+                           upcase!
+                           capitalize
+                           capitalize!
+                         )
+
+  RANGE_REGEXP = /\[[^\]]*?([#{ALPHABET}]-[#{ALPHABET}])[^\[]*?\]/
 
   CONJUCTIONS = %w(
                     ve
@@ -45,5 +54,5 @@ module TurkishSupportHelpers
                     veya
                   )
 
-  SPECIAL_CHARS = %(\("')
+  SPECIAL_CHARS = %Q{("'}
 end
