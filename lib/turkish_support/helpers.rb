@@ -3,8 +3,6 @@ module TurkishSupportHelpers
     Regexp.new(pattern) unless pattern.is_a? Regexp
     re, options = pattern.source, pattern.options
 
-    puts re.inspect
-
     while re.match(RANGE_REGEXP) do
       re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
         re.gsub! matching, translate_range(matching, pattern.casefold?)
@@ -81,15 +79,13 @@ module TurkishSupportHelpers
   end
 
   def downcase_range(first, last, casefold)
-    r = lower[lower.index(first)..lower.index(last)]
-    r << upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}") if casefold
-    r
+    lower[lower.index(first)..lower.index(last)] +
+    (upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}") if casefold).to_s
   end
 
   def upcase_range(first, last, casefold)
-    r = upper[upper.index(first)..upper.index(last)]
-    r << lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}") if casefold
-    r
+    upper[upper.index(first)..upper.index(last)] +
+    (lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}") if casefold).to_s
   end
 
   def lower

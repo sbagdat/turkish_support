@@ -2,8 +2,8 @@ module TurkishSupportHelpers
   ALPHA = {
     lower:    'abcçdefgğhıijklmnoöpqrsştuüvwxyz',
     upper:    'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ',
-    tr_lower:  'çğıiöşü',
-    tr_upper:  'ÇĞIİÖŞÜ'
+    tr_lower: 'çğıiöşü',
+    tr_upper: 'ÇĞIİÖŞÜ'
   }
 
   ALPHABET = ALPHA[:upper] + ALPHA[:lower]
