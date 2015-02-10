@@ -15,44 +15,40 @@ module TurkishSupportHelpers
 
   # Regexp required methods
   RE_RE_METHS = %i(
-                    match
-                    scan
-                  )
+    match
+    scan
+  )
 
   # Regexp optional methods
   RE_OP_METHS = %i(
-                    []
-                    []=
-                    =~
-                    index
-                    rindex
-                    partition
-                    rpartition
-                    slice
-                    slice!
-                    split
-                    sub
-                    sub!
-                    gsub
-                    gsub!
-                  )
+    []
+    []=
+    =~
+    index
+    rindex
+    partition
+    rpartition
+    slice
+    slice!
+    split
+    sub
+    sub!
+    gsub
+    gsub!
+  )
 
   CASE_RELATED_METHS = %i(
-                           downcase
-                           downcase!
-                           upcase
-                           upcase!
-                           capitalize
-                           capitalize!
-                         )
+    downcase
+    downcase!
+    upcase
+    upcase!
+    capitalize
+    capitalize!
+  )
 
   RANGE_REGEXP = /\[[^\]]*?([#{ALPHABET}]-[#{ALPHABET}])[^\[]*?\]/
 
-  CONJUCTIONS = %w(
-                    ve
-                    ile
-                    veya
-                  )
+  CONJUCTIONS = %w(ve ile veya)
 
-  SPECIAL_CHARS = %Q{("'}
+  SPECIAL_CHARS = %q{("'}
 end

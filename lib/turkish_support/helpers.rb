@@ -3,7 +3,7 @@ module TurkishSupportHelpers
     Regexp.new(pattern) unless pattern.is_a? Regexp
     re, options = pattern.source, pattern.options
 
-    while re.match(RANGE_REGEXP) do
+    while re.match(RANGE_REGEXP)
       re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
         re.gsub! matching, translate_range(matching, pattern.casefold?)
       end
@@ -63,8 +63,8 @@ module TurkishSupportHelpers
 
   def prepare_for_capitalize(string)
     [
-     prepare_for(:upcase, string.chr).upcase,
-     prepare_for(:downcase, self[1..-1]).downcase
+      prepare_for(:upcase, string.chr).upcase,
+      prepare_for(:downcase, self[1..-1]).downcase
     ].join
   end
 
@@ -79,21 +79,31 @@ module TurkishSupportHelpers
   end
 
   def downcase_range(first, last, casefold)
-    lower[lower.index(first)..lower.index(last)] +
-    (upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}") if casefold).to_s
+    lower(first, last) +
+      (lower_opposite(first, last) if casefold).to_s
   end
 
   def upcase_range(first, last, casefold)
-    upper[upper.index(first)..upper.index(last)] +
-    (lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}") if casefold).to_s
+    upper(first, last) +
+      (upper_opposite(first, last) if casefold).to_s
   end
 
-  def lower
-    ALPHA[:lower]
+  def lower(first = nil, last = nil)
+    return ALPHA[:lower] if first.nil? || last.nil?
+    ALPHA[:lower][ALPHA[:lower].index(first)..ALPHA[:lower].index(last)]
   end
 
-  def upper
-    ALPHA[:upper]
+  def lower_opposite(first, last)
+    upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}")
+  end
+
+  def upper(first = nil, last = nil)
+    return ALPHA[:upper] if first.nil? || last.nil?
+    ALPHA[:upper][ALPHA[:upper].index(first)..ALPHA[:upper].index(last)]
+  end
+
+  def upper_opposite(first, last)
+    lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}")
   end
 end
 
