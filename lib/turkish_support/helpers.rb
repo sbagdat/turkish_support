@@ -1,5 +1,5 @@
 module TurkishSupportHelpers
-  def translate_regexp(pattern)
+  def translate_regexp(pattern) # rubocop:disable Metrics/AbcSize
     Regexp.new(pattern) unless pattern.is_a? Regexp
     re, options = pattern.source, pattern.options
 

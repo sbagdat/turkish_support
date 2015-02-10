@@ -1,2 +1,4 @@
 StringLiterals:
   EnforcedStyle: single_quotes
+Documentation:
+  Enabled: false
