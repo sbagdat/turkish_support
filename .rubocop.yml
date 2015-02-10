@@ -2,3 +2,6 @@ StringLiterals:
   EnforcedStyle: single_quotes
 Documentation:
   Enabled: false
+DotPosition:
+  EnforcedStyle: leading
+  Enabled: true
