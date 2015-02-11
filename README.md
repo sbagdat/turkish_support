@@ -40,6 +40,7 @@ __Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refine
 * [Array Methods](#array-methods)
   * [sort](#sort-and-sort)
 
+
 ## Installation
 
 Add this line to your application's Gemfile:
