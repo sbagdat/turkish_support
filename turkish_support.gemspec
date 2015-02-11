@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TurkishSupport::VERSION
   spec.authors       = ['Sıtkı Bağdat']
   spec.email         = ['sbagdat@gmail.com']
-  spec.summary       = 'Turkish character support for some core ruby methods.'
-  spec.description   = 'Turkish character support for some core ruby methods \
-    like String#upcase, String#downcase, String#match, Array#sort, and etc...)'
+  spec.summary       = 'Turkish character support for core ruby methods.'
+  spec.description   = 'Turkish character support for core ruby methods \
+    like String#upcase, String#gsub, String#match, Array#sort, and etc...)'
   spec.homepage      = 'https://github.com/sbagdat/turkish_support'
   spec.license       = 'MIT'
 

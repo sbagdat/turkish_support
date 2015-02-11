@@ -4,16 +4,41 @@
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
 [![Gitter chat](https://badges.gitter.im/sbagdat/turkish_support.png)](https://gitter.im/sbagdat/turkish_support)
 
-Turkish character support for some core ruby methods. This gem provide support for those methods: `String#upcase`,
-`String#downcase`, `String#capitalize`, `String#swapcase`, `String#casecmp`, `String#match`, `Array#sort`, and their destructive versions like `Array#sort!` or `String#capitalize!`. It also gives you some bonus methods like `String#titleize`.
+Turkish character support for core ruby methods. This gem provides support nearly all `String` methods, such as `String#upcase`, `String#downcase`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some bonus methods like `String#titleize`.
 
 ## Requirements
 
 * Ruby  >= 2.0.0
 * Rails >= 4.0.0
 
-__Notice:__ TurkishSupport uses refinements instead of monkey patching. Refinements come with Ruby 2.0.0 as a new feature
-and also, it is an experimental feature for now. If you want to more information about refinements, you can see the doc at [http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html](http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html)
+__Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refinements come with Ruby 2.0.0 as a new feature and also, it is an experimental feature for now. If you want to more information about refinements, you can see the doc at [http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html](http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html)~~ *Refinements are not an experimental feature, it is a core feature now.*
+
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Using with ruby](#using-with-ruby)
+  * [Using with ruby on rails](#using-with-ruby-on-rails)
+  * [Using Core Methods](#using-core-methods)
+* [String Methods](#string-methods)
+  * [#[] and #[]=](-and-)
+  * [#=~](#-equal-tilda)
+  * [capitalize](#capitalize-and-capitalize)
+  * [casecmp](#casecmp)
+  * [downcase](#downcase-and-downcase)
+  * [gsub](#gsub-and-gsub)
+  * [index](#index)
+  * [match](#match)
+  * [partition](#partition)
+  * [rpartition](#rpartition)
+  * [rindex](#rpartition)
+  * [scan](#scan)
+  * [slice](#slice-and-slice)
+  * [split](#split)
+  * [sub](#sub-and-sub)
+  * [swapcase](#swapcase-and-swapcase)
+  * [titleize](#titleize-and-titleize)
+  * [upcase](#upcase-and-upcase)
+* [Array Methods](#array-methods)
+  * [sort](sort-and-sort)
 
 ## Installation
 
@@ -29,7 +54,7 @@ Or install it yourself as:
 
     $ gem install turkish_support
 
-## Usage Instructions
+## Usage
 
 After the installation of the gem, you should follow these steps.
 
@@ -59,99 +84,206 @@ class Test
   end
 end
 
-Test.new.up_me('içel')  #=> "İÇEL"
+Test.new.up_me('içel')  # => "İÇEL"
 ```
 
 ### Using with rails
 
 __Note:__ You don't need to require, because it is already required by the rails.
 
-* In rails you must add `using TurkishSupport` line to the top of the scope, __not inside of any class or module__.
+* You must add `using TurkishSupport` line to the top of the scope.
 
 ```ruby
   using TurkishSupport
 
-  class SampleModel
+  class SampleModel < ActiveRecord::Base
     ...
   end
 ```
 
-## Examples
+* If you want to use TurkishSupport with a custom class or a module that is not inherited from any rails tie, you must add `using TurkishSupport` line to the class or module.
 
-Within the file that you added `using TurkishSupport` line; you can use the core methods like below:
+```ruby
+  class CustomClass
+    using TurkishSupport
 
-__String#upcase__ and __String#upcase!__
+    ...
+  end
+```
+
+### Using Core Methods
+
+If you want to use original set of the core methods in the same scope, you can use `Object#public_send`:
 
 ```ruby
   str = 'Bağcılar'
-
-  str.upcase    #=> "BAĞCILAR"
-  str           #=> "Bağcılar"
-
-  str.upcase!   #=> "BAĞCILAR"
-  str           #=> "BAĞCILAR"
+  str.public_send(:upcase)  # => "BAğCıLAR"
 ```
 
-__String#downcase__ and __String#downcase!__
+## String Methods
+
+### [] and []=
 
 ```ruby
-  str = 'İSMAİL'
-  str.downcase    #=> "ismail"
+  'Türkiye Cumhuriyeti'[/\w+/] # => "Türkiye"
+  'Çetin'[/[a-ğ]+/i]           # => "Çe"
 ```
 
-__String#capitalize__ and __String#capitalize!__
+### =~ (equal-tilda)
+
+```ruby
+  'Bağlarbaşı Çarşı Kalabalık' =~ (/[s-ü]+/i) # => 8
+```
+
+### capitalize and capitalize!
 
 ```ruby
   str = 'türkÇE desteĞİ'
-  str.capitalize    #=> "Türkçe desteği"
+
+  str.capitalize    # => "Türkçe desteği"
+  str.capitalize!   # => "Türkçe desteği"
 ```
 
-__String#swapcase__ and __String#swapcase!__
+### casecmp
+
 ```ruby
-  'TuğÇE'.swapcase    #=> "tUĞçe"
+  'sıtKI'.casecmp('SITkı')     # => 0
 ```
 
-__String#casecmp__
+### downcase and downcase!
+
 ```ruby
-  'sıtKI'.casecmp('SITkı')     #=> 0
+  str = 'İSMAİL'
+
+  str.downcase    # => "ismail"
+  str.downcase!   # => "ismail"
 ```
 
-__String#match__
+### gsub and gsub!
 
 ```ruby
-  'Aşağı'.match(/\w+/)                         #=> #<MatchData "Aşağı">
-  'Aşağı Ayrancı'.match(/^\w+\s\w+$/)          #=> #<MatchData "Aşağı Ayrancı">
-  'aüvvağğ öövvaağ'.match(/^[a-z]+\s[a-z]+$/)  #=> #<MatchData "aüvvağğ öövvaağ">
-  'BAĞCIlar'.match(/[A-Z]+/)                   #=> #<MatchData "BAĞCI">
-  'Aşağı Ayrancı'.match(/\W+/)                 #=> #<MatchData "">
+ 'ağapaşaağa'.gsub(/[a-h]+/, 'bey')
 ```
 
-__Array#sort__ and __Array#sort!__
+### index
 
 ```ruby
-  %w(iki üç dört ılık iğne iyne).sort
-  #=> ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
+  '?ç-!+*/-ğüı'.index(/\w+/)        # => 1
+  '?ç-!+*/-ğüı'.index(/[a-z]+/, 2)  # => 8
 ```
 
-__String#titleize__ and __String#titleize!__
-
-These methods are not core methods of ruby, but they are accepted as useful in most situations.
+### match
 
 ```ruby
-  'türkÇE desteĞİ'.titleize           #=> "Türkçe Desteği"
+  'Aşağı'.match(/\w+/)
+  # => #<MatchData "Aşağı">
+
+  'Aşağı Ayrancı'.match(/^\w+\s\w+$/)
+  # => #<MatchData "Aşağı Ayrancı">
+
+  'aüvvağğ öövvaağ'.match(/^[a-z]+\s[a-z]+$/)
+  # => #<MatchData "aüvvağğ öövvaağ">
+
+  'BAĞCIlar'.match(/[A-Z]+/)
+  # => #<MatchData "BAĞCI">
+
+  'Aşağı Ayrancı'.match(/\W+/)
+  # => #<MatchData "">
+```
+
+### partition
+
+```ruby
+  'Bağlarbaşı Çarşı'.partition(/\W+/) # => ["Bağlarbaşı", " ", "Çarşı"]
+```
+
+### rpartition
+
+```ruby
+  'Bağlarbaşı Çarşı Kalabalık'.rpartition(/\W+/)
+  # => ["Bağlarbaşı Çarşı", " ", "Kalabalık"]
+```
+
+### rindex
+
+```ruby
+  'şç-!+*/-ğüı'.rindex(/\w+/, 7)  # => 1
+```
+
+### scan
+
+```ruby
+  'Bağlarbaşı Çarşı Kalabalık'.scan(/[a-z]+/i)
+  # => ["Bağlarbaşı", "Çarşı", "Kalabalık"]
+```
+
+
+### slice and slice!
+
+```ruby
+  'Duayen'.slice(/[^h-ö]+/) # => "Duaye"
+```
+
+### split
+
+```ruby
+  'Bağlarbaşı Çarşı Kalabalık'.split(/\W+/)
+  # => ["Bağlarbaşı", "Çarşı", "Kalabalık"]
+
+  'Bağlarbaşı Çarşı Kalabalık'.split(/[ç-ş]+/)
+  # => ["Ba", "a", "ba", " Ça", " Ka", "aba"]
+```
+
+### sub and sub!
+
+```ruby
+  'ağapaşaağa'.sub(/[a-h]+/, 'bey')  # => "beypaşaağa"
+```
+
+### swapcase and swapcase!
+
+```ruby
+  'TuğÇE'.swapcase    # => "tUĞçe"
+  'TuğÇE'.swapcase!   # => "tUĞçe"
+```
+
+### titleize and titleize!
+
+*These methods are not core methods of ruby, but they are accepted as useful in most situations.*
+
+```ruby
+  'türkÇE desteĞİ'.titleize           # => "Türkçe Desteği"
+  'türkÇE desteĞİ'.titleize!          # => "Türkçe Desteği"
 
   # Parenthesis, quotes, etc. support
-  "rUBY roCkS... (really! 'tRUSt' ME)".titleize          #=> "Ruby Rocks... (Really! 'Trust' Me)"
+  "rUBY roCkS... (really! 'tRUSt' ME)".titleize
+  # => "Ruby Rocks... (Really! 'Trust' Me)"
 
-  # If you don't want to capitalize conjuctions, simply pass a false value as a parameter
-  "kerem VE aslı VeYa leyla İlE mecnun".titleize(false)  #=> "Kerem ve Aslı veya Leyla ile Mecnun"
+  # If you don't want to capitalize conjuctions,
+  # simply pass a false value as parameter
+  "kerem VE aslı VeYa leyla İlE mecnun".titleize(false)
+  # => "Kerem ve Aslı veya Leyla ile Mecnun"
 ```
 
-__Important Note:__ If you also want to use original set of the core methods in the same scope, you can use `send` method like this:
+### upcase and upcase!
 
 ```ruby
   str = 'Bağcılar'
-  str.send(:upcase)  #=> "BAğCıLAR"
+
+  str.upcase    # => "BAĞCILAR"
+  str           # => "Bağcılar"
+
+  str.upcase!   # => "BAĞCILAR"
+  str           # => "BAĞCILAR"
+```
+
+## Array Methods
+
+### sort and sort!
+
+```ruby
+  %w(iki üç dört ılık iğne iyne).sort
+  # => ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
 ```
 
 ## Contributing
