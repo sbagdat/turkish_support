@@ -19,7 +19,7 @@ __Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refine
   * [Using with ruby on rails](#using-with-ruby-on-rails)
   * [Using Core Methods](#using-core-methods)
 * [String Methods](#string-methods)
-  * [#[] and #[]=](-and-)
+  * [#[] and #[]=](#-and-)
   * [#=~](#-equal-tilda)
   * [capitalize](#capitalize-and-capitalize)
   * [casecmp](#casecmp)
@@ -29,7 +29,7 @@ __Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refine
   * [match](#match)
   * [partition](#partition)
   * [rpartition](#rpartition)
-  * [rindex](#rpartition)
+  * [rindex](#rindex)
   * [scan](#scan)
   * [slice](#slice-and-slice)
   * [split](#split)
@@ -38,7 +38,7 @@ __Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refine
   * [titleize](#titleize-and-titleize)
   * [upcase](#upcase-and-upcase)
 * [Array Methods](#array-methods)
-  * [sort](sort-and-sort)
+  * [sort](#sort-and-sort)
 
 ## Installation
 
@@ -87,7 +87,7 @@ end
 Test.new.up_me('içel')  # => "İÇEL"
 ```
 
-### Using with rails
+### Using with ruby on rails
 
 __Note:__ You don't need to require, because it is already required by the rails.
 
