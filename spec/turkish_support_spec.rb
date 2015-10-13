@@ -354,6 +354,13 @@ module TurkishSupport
             .to eq('Merhaba Çamur İsmet')
         end
 
+        it 'no problem with words that consist of special chars only' do
+          titleized = '(( merhaba çamur ismet'.titleize
+
+          expect(titleized)
+            .to eq('(( Merhaba Çamur İsmet')
+        end
+
         it 'downcases characters other than first characters of all words' do
           titleized = 'mERHABA çAMUR iSMETOĞULLARI'.titleize
 
