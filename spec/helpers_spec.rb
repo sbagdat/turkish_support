@@ -71,24 +71,24 @@ describe 'TurkishSupportHelpers' do
     context 'returns false' do
       it 'for non-Turkish specific lower case characters' do
         expect(downcased_alphabet
-          .delete(tr_specific_lower)
-          .chars
-          .any? { |ch| tr_lower?(ch) }
-        ).to eq(false)
+                .delete(tr_specific_lower)
+                .chars
+                .any? { |ch| tr_lower?(ch) }
+              ).to eq(false)
       end
 
       it 'for any upper case characters' do
         expect(upcased_alphabet
-          .chars
-          .any? { |ch| tr_lower?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_lower?(ch) }
+              ).to eq(false)
       end
 
       it 'for non-letter characters' do
         expect("\"é1!2'3^+4.,-_"
-          .chars
-          .any? { |ch| tr_lower?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_lower?(ch) }
+              ).to eq(false)
       end
     end
   end
@@ -96,32 +96,32 @@ describe 'TurkishSupportHelpers' do
   describe '#tr_upper?' do
     it 'returns true for any Turkish specific upper case character' do
       expect(tr_specific_upper
-        .chars
-        .all? { |ch| tr_upper?(ch) }
-      ).to eq(true)
+              .chars
+              .all? { |ch| tr_upper?(ch) }
+            ).to eq(true)
     end
 
     context 'returns false' do
       it 'for non-Turkish specific upper case characters' do
         expect(upcased_alphabet
-          .delete(tr_specific_upper)
-          .chars
-          .any? { |ch| tr_upper?(ch) }
-        ).to eq(false)
+                .delete(tr_specific_upper)
+                .chars
+                .any? { |ch| tr_upper?(ch) }
+              ).to eq(false)
       end
 
       it 'for any lower case characters' do
         expect(downcased_alphabet
-          .chars
-          .any? { |ch| tr_upper?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_upper?(ch) }
+              ).to eq(false)
       end
 
       it 'for non-letter characters' do
         expect("\"é1!2'3^+4.,-_"
-          .chars
-          .any? { |ch| tr_upper?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_upper?(ch) }
+              ).to eq(false)
       end
     end
   end
@@ -129,24 +129,24 @@ describe 'TurkishSupportHelpers' do
   describe '#tr_char?' do
     it 'returns true for any Turkish specific character' do
       expect(tr_all
-        .chars
-        .all? { |ch| tr_char?(ch) }
-      ).to eq(true)
+              .chars
+              .all? { |ch| tr_char?(ch) }
+            ).to eq(true)
     end
 
     context 'returns false' do
       it 'for non-Turkish specific characters' do
         expect(alphabet.delete(tr_all)
-          .chars
-          .any? { |ch| tr_char?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_char?(ch) }
+              ).to eq(false)
       end
 
       it 'for non-letter characters' do
         expect("\"é1!2'3^+4.,-_"
-          .chars
-          .any? { |ch| tr_char?(ch) }
-        ).to eq(false)
+                .chars
+                .any? { |ch| tr_char?(ch) }
+              ).to eq(false)
       end
     end
   end
@@ -154,14 +154,14 @@ describe 'TurkishSupportHelpers' do
   describe '#conjuction?' do
     it 'returns true for any conjuction' do
       expect(conjuctions
-        .all? { |c| conjuction?(c) }
-      ).to eq(true)
+              .all? { |c| conjuction?(c) }
+            ).to eq(true)
     end
 
     it 'returns false for any word contains conjuction' do
       expect(%w(veda aile veyahut)
-        .any? { |c| conjuction?(c) }
-      ).to eq(false)
+              .any? { |c| conjuction?(c) }
+            ).to eq(false)
     end
   end
 
@@ -169,37 +169,35 @@ describe 'TurkishSupportHelpers' do
     it 'returns true for all words starts with a special char' do
       special_words = turkish_words.map { |w| special_chars.sample + w }
       expect(special_words
-        .all? { |word| start_with_a_special_char?(word) }
-      ).to eq(true)
+              .all? { |word| start_with_a_special_char?(word) }
+            ).to eq(true)
     end
 
     it 'returns false any words not starts with a special char' do
       expect(turkish_words
-        .any? { |word| start_with_a_special_char?(word) }
-      ).to eq(false)
+              .any? { |word| start_with_a_special_char?(word) }
+            ).to eq(false)
     end
   end
 
   describe '#translate_range' do
     it 'translates a complete lower-case range correctly' do
-      expect(translate_range('a-z'))
-        .to eq(downcased_alphabet)
+      expect(translate_range('a-z')).to eq(downcased_alphabet)
     end
 
     it 'translates a complete upper-case range correctly' do
-      expect(translate_range('A-Z'))
-        .to eq(upcased_alphabet)
+      expect(translate_range('A-Z')).to eq(upcased_alphabet)
     end
 
     it 'raises an error if any arguments not a letter' do
       invalid_arguments = %w(1-Z A-9 1-9 a-])
       expect(invalid_arguments
-        .all? do |arg|
-          expect { translate_range(arg) }
-            .to raise_error ArgumentError,
-                            'Invalid regexp range arguments!'
-        end
-      ).to eq(true)
+              .all? do |arg|
+                expect { translate_range(arg) }
+                  .to raise_error ArgumentError,
+                                  'Invalid regexp range arguments!'
+              end
+            ).to eq(true)
     end
 
     it 'raises an error if arguments are not in same case' do

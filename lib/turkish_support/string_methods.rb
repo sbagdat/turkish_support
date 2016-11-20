@@ -21,13 +21,13 @@ module TurkishSupport
       end
     end
 
-    def titleize(conjuctions = true)
+    def titleize(conjuctions = true) # rubocop:disable Metrics/AbcSize
       split.map do |word|
         word.downcase!
         if conjuction?(word) && !conjuctions
           word
         elsif start_with_a_special_char?(word)
-          word.size > 1 ? word.chr + word[1..-1].capitalize : word.chr
+          word.size > 1 ? word[0] + word[1..-1].capitalize : word.chr
         else
           word.capitalize
         end

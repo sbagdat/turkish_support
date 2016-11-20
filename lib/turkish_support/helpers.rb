@@ -1,7 +1,8 @@
 module TurkishSupportHelpers
   def translate_regexp(pattern) # rubocop:disable Metrics/AbcSize
     Regexp.new(pattern) unless pattern.is_a? Regexp
-    re, options = pattern.source, pattern.options
+    re = pattern.source
+    options = pattern.options
 
     while re.match(RANGE_REGEXP)
       re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
@@ -25,7 +26,7 @@ module TurkishSupportHelpers
   def prepare_for(meth, string)
     valid_meths = %i(upcase downcase capitalize)
     unless valid_meths.include?(meth) && string.is_a?(String)
-      fail ArgumentError, 'Invalid arguments for method `prepare_for`!'
+      raise ArgumentError, 'Invalid arguments for method `prepare_for`!'
     end
 
     method("prepare_for_#{meth}").call(string)
@@ -74,7 +75,7 @@ module TurkishSupportHelpers
     elsif upper.include?(first) && upper.include?(last)
       upcase_range(first, last, casefold)
     else
-      fail ArgumentError, 'Invalid regexp range arguments!'
+      raise ArgumentError, 'Invalid regexp range arguments!'
     end
   end
 

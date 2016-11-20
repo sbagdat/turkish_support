@@ -1,7 +1,7 @@
 require 'spec_helper'
 using TurkishSupport
 
-module TurkishSupport
+module TurkishSupport # rubocop:disable Metrics/ModuleLength
   describe VERSION do
     it 'should have a version number' do
       expect(TurkishSupport::VERSION).to_not eq(nil)
@@ -29,18 +29,17 @@ module TurkishSupport
 
         it 'is able to capture Turkish characters' do
           expect(turkish_words
-            .all? { |w| w[/\w+/] == w }
-          ).to eq(true)
+                  .all? { |w| w[/\w+/] == w }
+                ).to eq(true)
 
           expect(turkish_words
-            .all? { |w| w[/[a-z]+/] == w }
-          ).to eq(true)
+                  .all? { |w| w[/[a-z]+/] == w }
+                ).to eq(true)
 
-          expect(
-            turkish_words
-            .map(&:upcase)
-            .all? { |w| w[/[a-z]+/i] == w }
-          ).to eq(true)
+          expect(turkish_words
+                  .map(&:upcase)
+                  .all? { |w| w[/[a-z]+/i] == w }
+                ).to eq(true)
         end
       end
 
@@ -67,53 +66,50 @@ module TurkishSupport
 
       it 'is able to capture Turkish characters' do
         expect(turkish_words
-          .all? { |w| w.index(/\w+/).zero? }
-        ).to eq(true)
+                .all? { |w| w.index(/\w+/).zero? }
+              ).to eq(true)
 
         expect(turkish_words
-          .all? { |w| w.index(/[a-z]+/).zero? }
-        ).to eq(true)
+                .all? { |w| w.index(/[a-z]+/).zero? }
+              ).to eq(true)
 
         expect(turkish_words
-          .map(&:upcase)
-          .all? { |w| w.index(/[a-z]+/i).zero? }
-        ).to eq(true)
+                .map(&:upcase)
+                .all? { |w| w.index(/[a-z]+/i).zero? }
+              ).to eq(true)
       end
 
       it 'begins to search from the right position' do
-        expect('şç-!+*/-ğüı'.index(/\w+/, 2))
-          .to eq(8)
+        expect('şç-!+*/-ğüı'.index(/\w+/, 2)).to eq(8)
       end
     end
 
     describe '#rindex' do
       it 'does not change the original value of the string' do
         word = turkish_words.sample
-        expect { word.rindex(/\w+/) }
-          .to_not change { word }
+        expect { word.rindex(/\w+/) }.to_not change { word }
       end
 
       it 'is able to capture Turkish characters' do
         expect(turkish_words
-          .map(&:reverse)
-          .all? { |w| w.rindex(/\w+/) == w.size - 1 }
-        ).to eq(true)
+                .map(&:reverse)
+                .all? { |w| w.rindex(/\w+/) == w.size - 1 }
+              ).to eq(true)
 
         expect(turkish_words
-          .map(&:reverse)
-          .all? { |w| w.rindex(/[a-z]+/) == w.size - 1 }
-        ).to eq(true)
+                .map(&:reverse)
+                .all? { |w| w.rindex(/[a-z]+/) == w.size - 1 }
+              ).to eq(true)
 
         expect(turkish_words
-          .map(&:upcase)
-          .map(&:reverse)
-          .all? { |w| w.rindex(/[a-z]+/i) == w.size - 1 }
-        ).to eq(true)
+                .map(&:upcase)
+                .map(&:reverse)
+                .all? { |w| w.rindex(/[a-z]+/i) == w.size - 1 }
+              ).to eq(true)
       end
 
       it 'finishes the searching to the right position' do
-        expect('şç-!+*/-ğüı'.rindex(/\w+/, 7))
-          .to eq(1)
+        expect('şç-!+*/-ğüı'.rindex(/\w+/, 7)).to eq(1)
       end
     end
 
@@ -123,13 +119,11 @@ module TurkishSupport
       let(:two_words) { "#{word1} #{word2}" }
 
       it 'does not change the original value of the string' do
-        expect { two_words.partition(/\W+/) }
-          .to_not change { two_words }
+        expect { two_words.partition(/\W+/) }.to_not change { two_words }
       end
 
       it 'is able to capture Turkish characters' do
-        expect(two_words.partition(/\W+/)
-        ).to eq([word1, ' ', word2])
+        expect(two_words.partition(/\W+/)).to eq([word1, ' ', word2])
       end
     end
 
@@ -140,8 +134,7 @@ module TurkishSupport
       let(:three_words) { "#{word1} #{word2} #{word3}" }
 
       it 'does not change the original value of the string' do
-        expect { three_words.rpartition(/\W+/) }
-          .to_not change { three_words }
+        expect { three_words.rpartition(/\W+/) }.to_not change { three_words }
       end
 
       it 'is able to capture Turkish characters' do
@@ -154,24 +147,22 @@ module TurkishSupport
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           sentence = turkish_words * ' '
-
-          expect { sentence.slice(/\w+/) }
-            .to_not change { sentence }
+          expect { sentence.slice(/\w+/) }.to_not change { sentence }
         end
 
         it 'is able to capture Turkish characters' do
           expect(turkish_words
-            .all? { |w| w.slice(/\w+/) == w }
-          ).to eq(true)
+                  .all? { |w| w.slice(/\w+/) == w }
+                ).to eq(true)
 
           expect(turkish_words
-            .all? { |w| w.slice(/[a-z]+/) == w }
-          ).to eq(true)
+                  .all? { |w| w.slice(/[a-z]+/) == w }
+                ).to eq(true)
 
           expect(turkish_words
-            .map(&:upcase)
-            .all? { |w| w.slice(/[a-z]+/i) == w }
-          ).to eq(true)
+                  .map(&:upcase)
+                  .all? { |w| w.slice(/[a-z]+/i) == w }
+                ).to eq(true)
         end
       end
 
@@ -179,10 +170,8 @@ module TurkishSupport
         it 'changes the original value of the string' do
           sentence = turkish_words * ' '
 
-          expect { sentence.slice!(/\w+/) }
-            .to change { sentence }
-          expect(sentence)
-            .to eq(' ' + turkish_words[1..-1] * ' ')
+          expect { sentence.slice!(/\w+/) }.to change { sentence }
+          expect(sentence).to eq(' ' + turkish_words[1..-1] * ' ')
         end
       end
     end
@@ -190,29 +179,29 @@ module TurkishSupport
     describe '#split' do
       it 'is able to capture Turkish characters' do
         expect(turkish_words
-          .join(' ')
-          .split(/\w+/)
-          .join
-          .strip
-          .empty?
-        ).to eq(true)
+                .join(' ')
+                .split(/\w+/)
+                .join
+                .strip
+                .empty?
+              ).to eq(true)
 
         expect(turkish_words
-          .join(' ')
-          .split(/[a-z]+/)
-          .join
-          .strip
-          .empty?
-        ).to eq(true)
+                .join(' ')
+                .split(/[a-z]+/)
+                .join
+                .strip
+                .empty?
+              ).to eq(true)
 
         expect(turkish_words
-          .join(' ')
-          .upcase
-          .split(/[a-z]+/i)
-          .join
-          .strip
-          .empty?
-        ).to eq(true)
+                .join(' ')
+                .upcase
+                .split(/[a-z]+/i)
+                .join
+                .strip
+                .empty?
+              ).to eq(true)
       end
     end
 
@@ -226,15 +215,13 @@ module TurkishSupport
         it 'upcases all of Turkish characters' do
           upcased_string = downcased_turkish_alphabet.upcase
 
-          expect(upcased_string)
-            .to eq(upcased_turkish_alphabet)
+          expect(upcased_string).to eq(upcased_turkish_alphabet)
         end
 
         it 'upcases English characters except i as I' do
           upcased_string = downcased_english_alphabet.upcase
 
-          expect(upcased_string)
-            .to eq(upcased_english_alphabet.tr('I', 'İ'))
+          expect(upcased_string).to eq(upcased_english_alphabet.tr('I', 'İ'))
         end
       end
 
@@ -243,8 +230,7 @@ module TurkishSupport
           expect { downcased_turkish_alphabet.upcase! }
             .to change { downcased_turkish_alphabet }
 
-          expect(downcased_turkish_alphabet)
-            .to eq(upcased_turkish_alphabet)
+          expect(downcased_turkish_alphabet).to eq(upcased_turkish_alphabet)
         end
       end
     end
@@ -285,8 +271,7 @@ module TurkishSupport
         it 'does not change the original value of the string' do
           turkish_word = turkish_words.sample
 
-          expect { turkish_word.capitalize }
-            .to_not change { turkish_word }
+          expect { turkish_word.capitalize }.to_not change { turkish_word }
         end
 
         it 'capitalizes the leading first Turkish character' do
@@ -445,43 +430,37 @@ module TurkishSupport
       end
 
       it "doesn't match Turkish characters when regex include '\\W'" do
-        expect('Aşağı Ayrancı'
-          .match(/\W+/)
-          .to_s
-        ).to eq(' ')
+        expect('Aşağı Ayrancı'.match(/\W+/).to_s).to eq(' ')
       end
     end
 
     describe '#scan' do
       it "matches Turkish characters when regex include '\\w'" do
-        expect(turkish_words
-          .join(' ')
-          .scan(/\w+/)
-        ).to eq(turkish_words)
+        expect(turkish_words.join(' ').scan(/\w+/)).to eq(turkish_words)
       end
 
       it 'matches Turkish characters when regex include lowercase range' do
         expect(turkish_words
-          .join(' ')
-          .scan(/^[a-z\s]+$/)
-        ).to eq([turkish_words.join(' ')])
+                .join(' ')
+                .scan(/^[a-z\s]+$/)
+              ).to eq([turkish_words.join(' ')])
       end
 
       it 'matches Turkish characters when regex include uppercase range' do
         expect(turkish_words
-          .join(' ')
-          .upcase
-          .scan(/^[A-Z\s]+$/)
-        ).to eq([turkish_words.join(' ').upcase])
+                .join(' ')
+                .upcase
+                .scan(/^[A-Z\s]+$/)
+              ).to eq([turkish_words.join(' ').upcase])
       end
 
       it "matches Turkish characters when regex include '\\w'" do
         expect(turkish_words
-          .join(' ')
-          .scan(/\W+/)
-          .map(&:strip)
-          .all?(&:empty?)
-        ).to eq(true)
+                .join(' ')
+                .scan(/\W+/)
+                .map(&:strip)
+                .all?(&:empty?)
+              ).to eq(true)
       end
     end
 
@@ -490,30 +469,30 @@ module TurkishSupport
 
       it "matches Turkish characters when regex include '\\w'" do
         expect(tr_chars
-          .split(//)
-          .all? { |ch| (ch =~ /\w/).zero? }
-        ).to eq(true)
+                .split(//)
+                .all? { |ch| (ch =~ /\w/).zero? }
+              ).to eq(true)
       end
 
       it 'matches Turkish characters when regex include lowercase range' do
         expect(ALPHA[:tr_lower]
-          .split(//)
-          .all? { |ch| (ch =~ /[a-z]/).zero? }
-        ).to eq(true)
+                .split(//)
+                .all? { |ch| (ch =~ /[a-z]/).zero? }
+              ).to eq(true)
       end
 
       it 'matches Turkish characters when regex include uppercase range' do
         expect(ALPHA[:tr_upper]
-          .split(//)
-          .all? { |ch| (ch =~ /[A-Z]/).zero? }
-        ).to eq(true)
+                .split(//)
+                .all? { |ch| (ch =~ /[A-Z]/).zero? }
+              ).to eq(true)
       end
 
       it "doesn't match Turkish characters when regex include '\\W'" do
         expect(tr_chars
-          .split(//)
-          .all? { |ch| (ch =~ /\W/).nil? }
-        ).to eq(true)
+                .split(//)
+                .all? { |ch| (ch =~ /\W/).nil? }
+              ).to eq(true)
       end
     end
 
@@ -522,19 +501,16 @@ module TurkishSupport
         it 'does not affect the object' do
           word = 'ağapaşa ağa'
 
-          expect { word.sub(/\w+/, 'bey') }
-            .to_not change { word }
+          expect { word.sub(/\w+/, 'bey') }.to_not change { word }
         end
 
         it 'matches Turkish characters, and replaces them' do
-          expect('ağapaşa ağa'.sub(/\w+/, 'bey'))
-            .to eq('bey ağa')
+          expect('ağapaşa ağa'.sub(/\w+/, 'bey')).to eq('bey ağa')
 
           expect('ağapaşa ağa şapka'.sub(/\W+/, 'bey'))
             .to eq('ağapaşabeyağa şapka')
 
-          expect('ağapaşaağa'.sub(/[a-h]+/, 'bey'))
-            .to eq('beypaşaağa')
+          expect('ağapaşaağa'.sub(/[a-h]+/, 'bey')).to eq('beypaşaağa')
         end
       end
 
@@ -555,19 +531,16 @@ module TurkishSupport
         it 'does not affect the object' do
           word = 'ağapaşa ağa'
 
-          expect { word.gsub(/\w+/, 'bey') }
-            .to_not change { word }
+          expect { word.gsub(/\w+/, 'bey') }.to_not change { word }
         end
 
         it 'matches Turkish characters, and replaces them' do
-          expect('ağapaşa ağa'.gsub(/\w+/, 'bey'))
-            .to eq('bey bey')
+          expect('ağapaşa ağa'.gsub(/\w+/, 'bey')).to eq('bey bey')
 
           expect('ağapaşa ağa şapka'.gsub(/\W+/, 'bey'))
             .to eq('ağapaşabeyağabeyşapka')
 
-          expect('ağapaşaağa'.gsub(/[a-h]+/, 'bey'))
-            .to eq('beypbeyşbey')
+          expect('ağapaşaağa'.gsub(/[a-h]+/, 'bey')).to eq('beypbeyşbey')
         end
       end
 
@@ -598,27 +571,22 @@ module TurkishSupport
     describe '#sort' do
       context 'with non-destructive version' do
         it 'does not change the original value of the array' do
-          expect { unsorted_array1.sort }
-            .to_not change { unsorted_array1 }
+          expect { unsorted_array1.sort }.to_not change { unsorted_array1 }
         end
 
         it 'sorts array in alphabetical order' do
-          expect(unsorted_array1.sort)
-            .to eq(sorted_array1)
+          expect(unsorted_array1.sort).to eq(sorted_array1)
         end
 
         it 'sorts array in alphabetical order' do
-          expect(unsorted_array2.sort)
-            .to eq(sorted_array2)
+          expect(unsorted_array2.sort).to eq(sorted_array2)
         end
       end
 
       context 'with destructive version' do
         it 'changes the original value of the array' do
-          expect { unsorted_array1.sort! }
-            .to change { unsorted_array1 }
-          expect(unsorted_array1)
-            .to eq(sorted_array1)
+          expect { unsorted_array1.sort! }.to change { unsorted_array1 }
+          expect(unsorted_array1).to eq(sorted_array1)
         end
       end
     end
