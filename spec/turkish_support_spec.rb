@@ -568,6 +568,14 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
     let(:unsorted_array2) { %w(iki Üç dört ılık İğne iyne Ul) }
     let(:sorted_array2)   { %w(İğne Ul Üç dört ılık iki iyne) }
 
+    let(:unsorted_array3) do
+      ['Sıtkı1 Bağdat', 'Sıtkı Bağdat', 'a', '3s', '2 b', 'ab ']
+    end
+
+    let(:sorted_array3) do
+      ["2 b", "3s", "Sıtkı Bağdat", "Sıtkı1 Bağdat", "a", "ab "]
+    end
+
     describe '#sort' do
       context 'with non-destructive version' do
         it 'does not change the original value of the array' do
@@ -581,12 +589,26 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
         it 'sorts array in alphabetical order' do
           expect(unsorted_array2.sort).to eq(sorted_array2)
         end
+
+        it 'sorts an array that include special chars, numbers, etc.' do
+          expect(unsorted_array3.sort).to eq(sorted_array3)
+        end
       end
 
       context 'with destructive version' do
-        it 'changes the original value of the array' do
+        it 'changes the original value of the array(first sample)' do
           expect { unsorted_array1.sort! }.to change { unsorted_array1 }
           expect(unsorted_array1).to eq(sorted_array1)
+        end
+
+        it 'changes the original value of the array(second sample)' do
+          expect { unsorted_array2.sort! }.to change { unsorted_array2 }
+          expect(unsorted_array2).to eq(sorted_array2)
+        end
+
+        it 'changes the original value of the array(third sample)' do
+          expect { unsorted_array3.sort! }.to change { unsorted_array3 }
+          expect(unsorted_array3).to eq(sorted_array3)
         end
       end
     end

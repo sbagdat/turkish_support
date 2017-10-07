@@ -2,10 +2,13 @@ module TurkishSupport
   refine Array do
     def sort
       sort_by do |item|
-        if item.is_a?(String)
-          item.chars.map { |ch| ALPHABET.index(ch) }
-        else
-          super
+        item.chars.map do |ch|
+          if ALPHABET.include?(ch)
+            # Add 65 to put special chars and numbers in correct order
+            ALPHABET.index(ch) + 65
+          else
+            ch.ord
+          end
         end
       end
     end
