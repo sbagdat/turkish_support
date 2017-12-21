@@ -56,5 +56,40 @@ module TurkishSupport
     def casecmp(other_string)
       upcase.public_send(:casecmp, other_string.upcase)
     end
+
+    def <=>(other)
+      tr_letter_order = {}
+
+      ("ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ" +
+       "abcçdefgğhii̇jklmnoöpqrsştuüvwxyz").each_char.with_index do |char,index|
+        tr_letter_order[char] = index
+      end
+
+      self.each_char.with_index do |char,index|
+        position1 = tr_letter_order[char]
+        position2 = tr_letter_order[other[index]]
+        if position1 && position2
+          if position1 != position2
+            return (position1 < position2 ? -1 : 1)
+          end
+        else
+          if other[index]
+            if char.public_send(:<=>, other[index]) != 0
+              return char.public_send(:<=>, other[index])
+            end
+          else
+            return 1
+          end
+        end
+      end
+
+      if self.length == other.length
+        return 0
+      elsif self.length < other.length
+        return -1
+      else
+        return 1
+      end
+    end
   end
 end
