@@ -58,6 +58,8 @@ module TurkishSupport
     end
 
     def <=>(other)
+      return nil if !other.respond_to?(:[])
+      
       tr_letter_order = {}
 
       ("ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ" +

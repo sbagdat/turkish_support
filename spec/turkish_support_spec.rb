@@ -554,6 +554,53 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
         end
       end
     end
+
+    describe "#<=>" do
+      let(:sorted_equal_length_strings) { %w(Cahit Çağla Ömer Sıtkı Şakir) }
+      let(:sorted_different_length_strings) { %w(c ca falan om saki sıt) }
+      context "with equal lentgth strings" do
+        it "works for smaller test" do
+          0.upto(sorted_equal_length_strings.length - 2) do |i|
+            expect(sorted_equal_length_strings[i] <=> sorted_equal_length_strings[i+1]).to eq(-1)
+          end
+        end
+
+        it "works for bigger test" do
+          (sorted_equal_length_strings.length-1).downto(1) do |i|
+            expect(sorted_equal_length_strings[i] <=> sorted_equal_length_strings[i-1]).to eq(1)
+          end
+        end
+
+        it "works for equals test" do
+          sorted_equal_length_strings.each do |str| 
+            expect(str <=> str).to eq(0)
+          end
+        end
+      end
+
+      context "with different lentgth strings" do
+        it "works for smaller test" do
+          0.upto(sorted_different_length_strings.length - 2) do |i|
+            expect(sorted_different_length_strings[i] <=> sorted_different_length_strings[i+1]).to eq(-1)
+          end
+        end
+
+        it "works for bigger test" do
+          (sorted_different_length_strings.length-1).downto(1) do |i|
+            expect(sorted_different_length_strings[i] <=> sorted_different_length_strings[i-1]).to eq(1)
+          end
+        end
+      end
+
+      context "invalid comparisons" do
+        it "returns nil" do
+          expect("a" <=> 3.5).to eq(nil)
+          expect("a" <=> true).to eq(nil)
+          expect("a" <=> Object.new).to eq(nil)
+          expect("a" <=> 1).to eq(nil)
+        end
+      end
+    end
   end
 
   describe Array do
