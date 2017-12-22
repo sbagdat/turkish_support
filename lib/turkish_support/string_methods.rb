@@ -1,5 +1,5 @@
 module TurkishSupport
-  refine String do
+  refine String do # rubocop:disable Metrics/BlockLength
     (RE_RE_METHS + RE_OP_METHS).each do |meth|
       define_method meth do |*args|
         extend(TurkishSupportHelpers)
@@ -57,41 +57,22 @@ module TurkishSupport
       upcase.public_send(:casecmp, other_string.upcase)
     end
 
-    def <=>(other)
-      return nil if !other.respond_to?(:[])
+    def <=>(other_string)
+      return nil unless other_string.is_a? String
+
+      each_char.with_index do |ch, i|
+        position1 = ASCII_ALPHABET[ch]
+        position2 = ASCII_ALPHABET[other_string[i]]
+
+        return (position2.nil? ? 0 : -1) if position1.nil?
+        return 1 if position2.nil?
+        return (position1 < position2 ? -1 : 1) if position1 != position2
+      end
+
+      return  0 if length == other_string.length
+      return -1 if length < other_string.length
+      return  1
       
-      tr_letter_order = {}
-
-      ("ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ" +
-       "abcçdefgğhii̇jklmnoöpqrsştuüvwxyz").each_char.with_index do |char,index|
-        tr_letter_order[char] = index
-      end
-
-      self.each_char.with_index do |char,index|
-        position1 = tr_letter_order[char]
-        position2 = tr_letter_order[other[index]]
-        if position1 && position2
-          if position1 != position2
-            return (position1 < position2 ? -1 : 1)
-          end
-        else
-          if other[index]
-            if char.public_send(:<=>, other[index]) != 0
-              return char.public_send(:<=>, other[index])
-            end
-          else
-            return 1
-          end
-        end
-      end
-
-      if self.length == other.length
-        return 0
-      elsif self.length < other.length
-        return -1
-      else
-        return 1
-      end
     end
   end
 end

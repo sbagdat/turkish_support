@@ -15,7 +15,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
     let(:upcased_english_alphabet)   { [*'A'..'Z'].join }
 
     let(:turkish_words) do
-      %w(çamur ıhlamur insan ördek şahika ümraniye)
+      %w[çamur ıhlamur insan ördek şahika ümraniye]
     end
 
     describe '#[]' do
@@ -279,7 +279,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
           capitalized_words = turkish_words.map { |w| w.capitalize }
 
           expect(capitalized_words)
-            .to eq(%w(Çamur Ihlamur İnsan Ördek Şahika Ümraniye))
+            .to eq(%w[Çamur Ihlamur İnsan Ördek Şahika Ümraniye])
         end
 
         it 'capitalizes the first character of a string and downcase others' do
@@ -556,9 +556,9 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
     end
 
     describe "#<=>" do
-      let(:sorted_equal_length_strings) { %w(Cahit Çağla Ömer Sıtkı Şakir) }
-      let(:sorted_different_length_strings) { %w(c ca falan om saki sıt) }
-      context "with equal lentgth strings" do
+      let(:sorted_equal_length_strings) { %w[Cahit Çağla Ömer Sıtkı Şakir] }
+      let(:sorted_different_length_strings) { %w[c ca falan om saki sıt] }
+      context "with equal length strings" do
         it "works for smaller test" do
           0.upto(sorted_equal_length_strings.length - 2) do |i|
             expect(sorted_equal_length_strings[i] <=> sorted_equal_length_strings[i+1]).to eq(-1)
@@ -578,7 +578,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
         end
       end
 
-      context "with different lentgth strings" do
+      context "with different length strings" do
         it "works for smaller test" do
           0.upto(sorted_different_length_strings.length - 2) do |i|
             expect(sorted_different_length_strings[i] <=> sorted_different_length_strings[i+1]).to eq(-1)
@@ -605,15 +605,15 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
   describe Array do
     let(:unsorted_array1) do
-      %w(bağcılar bahçelievler şimdi çüNKÜ olmalı üç\ kere düş ılık duy)
+      %w[bağcılar bahçelievler şimdi çüNKÜ olmalı üç\ kere düş ılık duy]
     end
 
     let(:sorted_array1) do
-      %w(bağcılar bahçelievler çüNKÜ duy düş ılık olmalı şimdi üç\ kere)
+      %w[bağcılar bahçelievler çüNKÜ duy düş ılık olmalı şimdi üç\ kere]
     end
 
-    let(:unsorted_array2) { %w(iki Üç dört ılık İğne iyne Ul) }
-    let(:sorted_array2)   { %w(İğne Ul Üç dört ılık iki iyne) }
+    let(:unsorted_array2) { %w[iki Üç dört ılık İğne iyne Ul] }
+    let(:sorted_array2)   { %w[İğne Ul Üç dört ılık iki iyne] }
 
     let(:unsorted_array3) do
       ['Sıtkı1 Bağdat', 'Sıtkı Bağdat', 'a', '3s', '2 b', 'ab ']
@@ -626,10 +626,10 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
     describe '#sort' do
       context 'with non-destructive version' do
         let(:unsorted_array_for_block_using) {
-          %w(ağa aça aşa aöa aüa aua afa aba)
+          %w[ağa aça aşa aöa aüa aua afa aba]
         }
         let(:sorted_array_for_block_using) {
-          %w(aba aça afa ağa aöa aşa aua aüa)
+          %w[aba aça afa ağa aöa aşa aua aüa]
         }
         it 'does not change the original value of the array' do
           expect { unsorted_array1.sort }.to_not change { unsorted_array1 }
