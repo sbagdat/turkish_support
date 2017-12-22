@@ -2,7 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
-[![Gitter chat](https://badges.gitter.im/sbagdat/turkish_support.png)](https://gitter.im/sbagdat/turkish_support)
 
 Turkish character support for core ruby methods. This gem provides support nearly all `String` methods, such as `String#upcase`, `String#downcase`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some bonus methods like `String#titleize`.
 
@@ -11,7 +10,7 @@ Turkish character support for core ruby methods. This gem provides support nearl
 * Ruby  >= 2.0.0
 * Rails >= 4.0.0
 
-__Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refinements come with Ruby 2.0.0 as a new feature and also, it is an experimental feature for now. If you want to more information about refinements, you can see the doc at [http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html](http://www.ruby-doc.org/core-2.0.0/doc/syntax/refinements_rdoc.html)~~ *Refinements are not an experimental feature, it is a core feature now.*
+__Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -19,6 +18,7 @@ __Notice:__ TurkishSupport uses refinements instead of monkey patching. ~~Refine
   * [Using with ruby on rails](#using-with-ruby-on-rails)
   * [Using Core Methods](#using-core-methods)
 * [String Methods](#string-methods)
+  * [#<=>](#-spaceship)
   * [#[] and #[]=](#-and-)
   * [#=~](#-equal-tilda)
   * [capitalize](#capitalize-and-capitalize)
@@ -122,6 +122,15 @@ If you want to use original set of the core methods in the same scope, you can u
 ```
 
 ## String Methods
+
+### <=> (spaceship)
+```ruby
+  'Cahit' <=> 'Çağla' # => -1
+  'Sıtkı' <=> 'Ömer'  # =>  1
+  'Eren'  <=> 'Eren'  # =>  0
+  'c'     <=> 'ca'    # => -1
+```
+
 
 ### [] and []=
 
