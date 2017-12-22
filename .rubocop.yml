@@ -5,3 +5,5 @@ Documentation:
 DotPosition:
   EnforcedStyle: leading
   Enabled: true
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']

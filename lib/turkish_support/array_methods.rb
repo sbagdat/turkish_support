@@ -1,19 +1,14 @@
 module TurkishSupport
   refine Array do
     def sort
-      if block_given?
-        super()
-      else
       sort_by do |item|
         item.chars.map do |ch|
           if ALPHABET.include?(ch)
-            # Add 65 to put special chars and numbers in correct order
-            ALPHABET.index(ch) + 65
+            ASCII_ALPHABET[ch]
           else
             ch.ord
           end
         end
-      end
       end
     end
 

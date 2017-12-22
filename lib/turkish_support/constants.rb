@@ -7,7 +7,12 @@ module TurkishSupportHelpers
   }.freeze
 
   ALPHABET = ALPHA[:upper] + ALPHA[:lower]
-
+  
+  ASCII_ALPHABET = ALPHABET.chars.map.with_index do |ch, i|
+    # Add 65 to put special chars and numbers in correct order
+    [ch, i + 65]
+  end.to_h
+  
   META_CHARS = {
     '\w' => '[\p{Latin}\d_]',
     '\W' => '[^\p{Latin}\d_]'

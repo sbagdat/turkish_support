@@ -24,7 +24,7 @@ module TurkishSupportHelpers
   end
 
   def prepare_for(meth, string)
-    valid_meths = %i(upcase downcase capitalize)
+    valid_meths = %i[upcase downcase capitalize]
     unless valid_meths.include?(meth) && string.is_a?(String)
       raise ArgumentError, 'Invalid arguments for method `prepare_for`!'
     end
