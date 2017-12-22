@@ -1,9 +1,6 @@
 module TurkishSupport
   refine Array do
     def sort
-      if block_given?
-        super()
-      else
       sort_by do |item|
         item.chars.map do |ch|
           if ALPHABET.include?(ch)
@@ -13,7 +10,6 @@ module TurkishSupport
             ch.ord
           end
         end
-      end
       end
     end
 

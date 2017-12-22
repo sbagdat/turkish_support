@@ -625,6 +625,12 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
     describe '#sort' do
       context 'with non-destructive version' do
+        let(:unsorted_array_for_block_using) {
+          %w(ağa aça aşa aöa aüa aua afa aba)
+        }
+        let(:sorted_array_for_block_using) {
+          %w(aba aça afa ağa aöa aşa aua aüa)
+        }
         it 'does not change the original value of the array' do
           expect { unsorted_array1.sort }.to_not change { unsorted_array1 }
         end
@@ -639,6 +645,10 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
         it 'sorts an array that include special chars, numbers, etc.' do
           expect(unsorted_array3.sort).to eq(sorted_array3)
+        end
+
+        it 'sorts array for random conditions' do
+          expect(unsorted_array_for_block_using.sort {|a, b| a[1] <=> b[1]}).to eq(sorted_array_for_block_using)
         end
       end
 
