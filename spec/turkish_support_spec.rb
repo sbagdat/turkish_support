@@ -650,6 +650,14 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
         it 'sorts array for random conditions' do
           expect(unsorted_array_for_block_using.sort {|a, b| a[1] <=> b[1]}).to eq(sorted_array_for_block_using)
         end
+        
+        it 'sorts nested arrays' do
+          unsorted_nested_array = [["Şakir", 2], ["İsmet", 0], ["Zeliha", 1]]
+          expect(unsorted_nested_array.sort {|a, b| a[1] <=> b[1]})
+            .to eq([["İsmet", 0], ["Zeliha", 1], ["Şakir", 2]])
+          expect(unsorted_nested_array.sort {|a, b| b[0] <=> a[0]})
+            .to eq([["Zeliha", 1], ["Şakir", 2], ["İsmet", 0]])
+        end
       end
 
       context 'with destructive version' do

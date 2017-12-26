@@ -1,12 +1,12 @@
 module TurkishSupport
   refine Array do
     def sort
-      sort_by do |item|
-        item.chars.map do |ch|
-          if ALPHABET.include?(ch)
-            ASCII_ALPHABET[ch]
-          else
-            ch.ord
+      if block_given? && any? { |item| !item.is_a? String }
+        super
+      else
+        sort_by do |item|
+          item.chars.map do |ch|
+            ALPHABET.include?(ch) ? ASCII_ALPHABET[ch] : ch.ord
           end
         end
       end
