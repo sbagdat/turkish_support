@@ -1,7 +1,7 @@
 module TurkishSupport
   refine Array do
     def sort
-      if block_given? && any? { |item| !item.is_a? String }
+      if block_given?
         super
       else
         sort_by do |item|
