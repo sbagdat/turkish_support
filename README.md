@@ -7,7 +7,7 @@ Turkish character support for core ruby methods. This gem provides support nearl
 
 ## Requirements
 
-* Ruby  >= 2.0.0
+* Ruby  >= 2.2.0
 * Rails >= 4.0.0
 
 __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
