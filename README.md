@@ -1,6 +1,6 @@
 # TurkishSupport
 
-[![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](http://badge.fury.io/rb/turkish_support)
+[![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](https://badge.fury.io/rb/turkish_support)
 [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
 
 Turkish character support for core ruby methods. This gem provides support nearly all `String` methods, such as `String#upcase`, `String#downcase`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some bonus methods like `String#titleize`.
