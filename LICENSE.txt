@@ -1,4 +1,4 @@
-Copyright (c) 2014-2017 Sıtkı Bağdat
+Copyright (c) 2014-2020 Sıtkı Bağdat
 
 MIT License
 
