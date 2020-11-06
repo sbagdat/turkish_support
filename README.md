@@ -7,8 +7,8 @@ Turkish character support for core ruby methods. This gem provides support nearl
 
 ## Requirements
 
-* Ruby  >= 2.2.0
-* Rails >= 4.0.0
+* Ruby  >= 2.7.0
+* Rails >= 6.0.0
 
 __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 
@@ -20,7 +20,6 @@ __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 * [String Methods](#string-methods)
   * [#<=>](#-spaceship)
   * [#[] and #[]=](#-and-)
-  * [#=~](#-equal-tilda)
   * [capitalize](#capitalize-and-capitalize)
   * [casecmp](#casecmp)
   * [downcase](#downcase-and-downcase)
@@ -137,12 +136,6 @@ If you want to use original set of the core methods in the same scope, you can u
 ```ruby
   'Türkiye Cumhuriyeti'[/\w+/] # => "Türkiye"
   'Çetin'[/[a-ğ]+/i]           # => "Çe"
-```
-
-### =~ (equal-tilda)
-
-```ruby
-  'Bağlarbaşı Çarşı Kalabalık' =~ (/[s-ü]+/i) # => 8
 ```
 
 ### capitalize and capitalize!
