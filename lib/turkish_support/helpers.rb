@@ -6,7 +6,7 @@ module TurkishSupportHelpers
 
     while re.match(RANGE_REGEXP)
       re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
-        re.gsub! matching, translate_range(matching, pattern.casefold?)
+        re.gsub! matching, translate_range(matching, casefold: pattern.casefold?)
       end
     end
 
@@ -14,38 +14,28 @@ module TurkishSupportHelpers
     Regexp.new(re.force_encoding('UTF-8'), Regexp::FIXEDENCODING | options)
   end
 
-  def translate_range(range_as_string, casefold = false)
+  def translate_range(range_as_string, casefold: false)
     return '' unless range_as_string
 
-    range_as_string.gsub!(/\[\]/, '')
+    range_as_string = range_as_string.gsub(/\[\]/, '')
     first, last = range_as_string.split('-')
-
     expand_range(first, last, casefold)
   end
 
-  def prepare_for(meth, string)
-    valid_meths = %i[upcase downcase capitalize]
-    unless valid_meths.include?(meth) && string.is_a?(String)
-      raise ArgumentError, 'Invalid arguments for method `prepare_for`!'
-    end
-
-    method("prepare_for_#{meth}").call(string)
+  def tr_char?(char)
+    tr_lower?(char) || tr_upper?(char)
   end
 
-  def tr_char?(ch)
-    tr_lower?(ch) || tr_upper?(ch)
+  def tr_lower?(char)
+    ALPHA[:tr_lower].include? char
   end
 
-  def tr_lower?(ch)
-    ALPHA[:tr_lower].include? ch
-  end
-
-  def tr_upper?(ch)
-    ALPHA[:tr_upper].include? ch
+  def tr_upper?(char)
+    ALPHA[:tr_upper].include? char
   end
 
   def conjuction?(string)
-    CONJUCTIONS.include? string
+    CONJUCTION.include? string
   end
 
   def start_with_a_special_char?(string)
@@ -53,21 +43,6 @@ module TurkishSupportHelpers
   end
 
   private
-
-  def prepare_for_upcase(string)
-    string.tr(ALPHA[:tr_lower], ALPHA[:tr_upper])
-  end
-
-  def prepare_for_downcase(string)
-    string.tr(ALPHA[:tr_upper], ALPHA[:tr_lower])
-  end
-
-  def prepare_for_capitalize(string)
-    [
-      prepare_for(:upcase, string.chr).upcase,
-      prepare_for(:downcase, self[1..-1]).downcase
-    ].join
-  end
 
   def expand_range(first, last, casefold)
     if lower.include?(first) && lower.include?(last)
@@ -91,6 +66,7 @@ module TurkishSupportHelpers
 
   def lower(first = nil, last = nil)
     return ALPHA[:lower] if first.nil? || last.nil?
+
     ALPHA[:lower][ALPHA[:lower].index(first)..ALPHA[:lower].index(last)]
   end
 
@@ -100,6 +76,7 @@ module TurkishSupportHelpers
 
   def upper(first = nil, last = nil)
     return ALPHA[:upper] if first.nil? || last.nil?
+
     ALPHA[:upper][ALPHA[:upper].index(first)..ALPHA[:upper].index(last)]
   end
 
