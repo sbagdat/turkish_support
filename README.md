@@ -16,7 +16,6 @@ __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 * [Usage](#usage)
   * [Using with ruby](#using-with-ruby)
   * [Using with ruby on rails](#using-with-ruby-on-rails)
-  * [Using Core Methods](#using-core-methods)
 * [String Methods](#string-methods)
   * [#<=>](#-spaceship)
   * [#[] and #[]=](#-and-)
@@ -109,15 +108,6 @@ __Note:__ You don't need to require, because it is already required by the rails
 
     ...
   end
-```
-
-### Using Core Methods
-
-If you want to use original set of the core methods in the same scope, you can use `Object#public_send`:
-
-```ruby
-  str = 'Bağcılar'
-  str.public_send(:upcase)  # => "BAğCıLAR"
 ```
 
 ## String Methods
