@@ -253,8 +253,8 @@ __Note:__ You don't need to require, because it is already required by the rails
   # => "Ruby Rocks... (Really! 'Trust' Me)"
 
   # If you don't want to capitalize conjuctions,
-  # simply pass a false value as parameter
-  "kerem VE aslı VeYa leyla İlE mecnun".titleize(false)
+  # simply pass a false value to conjuction: parameter
+  "kerem VE aslı VeYa leyla İlE mecnun".titleize(conjuction: false)
   # => "Kerem ve Aslı veya Leyla ile Mecnun"
 ```
 
