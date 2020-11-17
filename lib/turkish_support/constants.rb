@@ -2,9 +2,9 @@
 
 module TurkishSupportHelpers
   ALPHA = { lower: 'abcçdefgğhıijklmnoöpqrsştuüvwxyz',
-      upper: 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ',
-      tr_lower: 'çğıiöşü',
-      tr_upper: 'ÇĞIİÖŞÜ' }.freeze
+            upper: 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ',
+            tr_lower: 'çğıiöşü',
+            tr_upper: 'ÇĞIİÖŞÜ' }.freeze
   ALPHABET = ALPHA[:upper] + ALPHA[:lower]
   ASCII_ALPHABET = ALPHABET.chars.map.with_index { |ch, i| [ch, i + 65] }.to_h
   META_CHARS = { '\w' => '[\p{Latin}\d_]', '\W' => '[^\p{Latin}\d_]' }.freeze
