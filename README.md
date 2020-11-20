@@ -18,6 +18,10 @@ __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
   * [Using with ruby on rails](#using-with-ruby-on-rails)
 * [String Methods](#string-methods)
   * [#<=>](#-spaceship)
+  * [#>](#----comparisons)
+  * [#>=](#----comparisons)
+  * [#<](#----comparisons)
+  * [#<=](#----comparisons)
   * [#[] and #[]=](#-and-)
   * [capitalize](#capitalize-and-capitalize)
   * [casecmp](#casecmp)
@@ -65,11 +69,7 @@ After the installation of the gem, you should follow these steps.
   require 'turkish_support'
 ```
 
-* Add `using TurkishSupport` line to where you want to activate it.
-
-```ruby
-  using TurkishSupport
-```
+* Add `using TurkishSupport` line to a class or a module.
 
 Example usage inside a class:
 
@@ -78,12 +78,13 @@ require 'turkish_support'
 
 class Test
   using TurkishSupport
-  def up_me(str)
+
+  def up(str)
     str.upcase
   end
 end
 
-Test.new.up_me('içel')  # => "İÇEL"
+Test.new.up('içel')  # => "İÇEL"
 ```
 
 ### Using with ruby on rails
@@ -95,8 +96,8 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```ruby
   using TurkishSupport
 
-  class SampleModel < ActiveRecord::Base
-    ...
+  class SampleModel < ApplicationRecord
+    # your code goes here
   end
 ```
 
@@ -106,7 +107,7 @@ __Note:__ You don't need to require, because it is already required by the rails
   class CustomClass
     using TurkishSupport
 
-    ...
+    # your code goes here
   end
 ```
 
@@ -120,6 +121,13 @@ __Note:__ You don't need to require, because it is already required by the rails
   'c'     <=> 'ca'    # => -1
 ```
 
+### <, <=, >, >= (comparisons)
+```ruby
+  'd'   >  'ç'     # => true
+  'aha' >= 'ağa'   # => true
+  'd'   <  'ç'     # => false
+  'ağa' <= 'aha'   # => true
+```
 
 ### [] and []=
 
@@ -155,7 +163,7 @@ __Note:__ You don't need to require, because it is already required by the rails
 ### gsub and gsub!
 
 ```ruby
-  'ağa paşa ağa'.gsub(/\b[a-h]+\b/, 'bey') # => "bey paşa bey" 
+  'ağa paşa ağa'.gsub(/\b[a-h]+\b/, 'bey') # => "bey paşa bey"
 ```
 
 ### index
