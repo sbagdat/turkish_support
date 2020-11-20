@@ -1,15 +1,12 @@
+# frozen_string_literal: true
+
 module TurkishSupport
   refine Array do
     def sort
-      if block_given?
-        super
-      else
-        sort_by do |item|
-          item.chars.map do |ch|
-            ALPHABET.include?(ch) ? ASCII_ALPHABET[ch] : ch.ord
-          end
-        end
-      end
+      return super if block_given?
+
+      extend TurkishSupportHelpers
+      sort_by { |item| item.chars.map { |ch| char_code(ch) } }
     end
 
     def sort!
