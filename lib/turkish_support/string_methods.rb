@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module TurkishSupport
   refine String do # rubocop:disable Metrics/BlockLength
@@ -55,20 +55,28 @@ module TurkishSupport
 
     def <=>(other)
       return nil unless other.is_a? String
+      return 0 if self == other
 
-      each_char.with_index do |ch, i|
-        position1 = ASCII_ALPHABET[ch]
-        position2 = ASCII_ALPHABET[other[i]]
+      extend TurkishSupportHelpers
+      return super(other) unless any_tr_char?(self) || any_tr_char?(other)
 
-        return (position2.nil? ? 0 : -1) if position1.nil?
-        return 1 if position2.nil?
-        return (position1 < position2 ? -1 : 1) if position1 != position2
-      end
+      spaceship(self, other)
+    end
 
-      return 0 if length == other.length
-      return -1 if length < other.length
+    def >(other)
+      (self <=> other) == 1 || false
+    end
 
-      1
+    def >=(other)
+      (self <=> other) == 1 || (self <=> other).zero? || false
+    end
+
+    def <(other)
+      (self <=> other) == -1 || false
+    end
+
+    def <=(other)
+      (self <=> other) == -1 || (self <=> other).zero? || false
     end
   end
 end

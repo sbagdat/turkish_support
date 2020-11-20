@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'turkish_support/version'
 require 'turkish_support/constants'
 require 'turkish_support/helpers'

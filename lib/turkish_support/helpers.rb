@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TurkishSupportHelpers
   def translate_regexp(pattern) # rubocop:disable Metrics/AbcSize
     Regexp.new(pattern) unless pattern.is_a? Regexp
@@ -26,6 +28,10 @@ module TurkishSupportHelpers
     tr_lower?(char) || tr_upper?(char)
   end
 
+  def any_tr_char?(str)
+    str.chars.any? { |ch| tr_char?(ch) }
+  end
+
   def tr_lower?(char)
     ALPHA[:tr_lower].include? char
   end
@@ -40,6 +46,21 @@ module TurkishSupportHelpers
 
   def start_with_a_special_char?(string)
     string =~ /^[#{SPECIAL_CHARS}]/
+  end
+
+  def char_code(char)
+    ASCII_ALPHABET[char] || char&.ord.to_i
+  end
+
+  def spaceship(str1, str2)
+    min_length = [str1.length, str2.length].min
+    str1[0..min_length].each_char.with_index do |ch, i|
+      next if char_code(ch) == char_code(str2[i])
+
+      return (char_code(ch) > char_code(str2[i]) ? 1 : -1)
+    end
+
+    str1.length > str2.length ? 1 : -1
   end
 
   private

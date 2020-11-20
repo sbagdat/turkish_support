@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 using TurkishSupport
 
@@ -362,6 +364,38 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
           word = 'ağapaşa ağa'
           expect { word.gsub!(/\w+/, 'bey') }.to(change { word }.from('ağapaşa ağa').to('bey bey'))
         end
+      end
+    end
+
+    describe '#>' do
+      it 'should compares turkish cars correctly' do
+        expect('d' > 'ç').to eq(true)
+        expect('ağa' > 'aga').to eq(true)
+        expect('ğ' > 'h').to eq(false)
+      end
+    end
+
+    describe '#>=' do
+      it 'should compares turkish cars correctly' do
+        expect('d' >= 'ç').to eq(true)
+        expect('aha' >= 'ağa').to eq(true)
+        expect('ğ.' >= 'ğ').to eq(true)
+      end
+    end
+
+    describe '#<' do
+      it 'should compares turkish cars correctly' do
+        expect('d' < 'ç').to eq(false)
+        expect('ağa' < 'aga').to eq(false)
+        expect('ğ' < 'h').to eq(true)
+      end
+    end
+
+    describe '#<=' do
+      it 'should compares turkish cars correctly' do
+        expect('d' <= 'ç').to eq(false)
+        expect('aha' <= 'ağa').to eq(false)
+        expect('ğ.' <= 'ğ').to eq(false)
       end
     end
 
