@@ -155,7 +155,7 @@ __Note:__ You don't need to require, because it is already required by the rails
 ### gsub and gsub!
 
 ```ruby
- 'ağapaşaağa'.gsub(/[a-h]+/, 'bey')
+  'ağa paşa ağa'.gsub(/\b[a-h]+\b/, 'bey') # => "bey paşa bey" 
 ```
 
 ### index
