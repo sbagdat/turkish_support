@@ -1,11 +1,12 @@
 AllCops:
   TargetRubyVersion: 2.7
-StringLiterals:
-  EnforcedStyle: single_quotes
-Documentation:
-  Enabled: false
-DotPosition:
+  NewCops: enable
+Layout/DotPosition:
   EnforcedStyle: leading
   Enabled: true
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
+Style/Documentation:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
