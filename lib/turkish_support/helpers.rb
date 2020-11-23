@@ -1,111 +1,132 @@
 # frozen_string_literal: true
 
-module TurkishSupportHelpers
-  def translate_regexp(pattern) # rubocop:disable Metrics/AbcSize
-    Regexp.new(pattern) unless pattern.is_a? Regexp
-    re = pattern.source
-    options = pattern.options
+# Let your ranges to speak in Turkish
+class TSRange
+  ALPHA = { lower: 'abcçdefgğhıijklmnoöpqrsştuüvwxyz'.chars,
+            upper: 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ'.chars,
+            tr_lower: 'çğıiöşü',
+            tr_upper: 'ÇĞIİÖŞÜ' }.freeze
 
-    while re.match(RANGE_REGEXP)
-      re.scan(RANGE_REGEXP).flatten.compact.each do |matching|
-        re.gsub! matching, translate_range(matching, casefold: pattern.casefold?)
-      end
+  def initialize(left:, right:, casefold: false)
+    @left = left
+    @right = right
+    @left_index  = ALPHA[:lower].index(left)  || ALPHA[:upper].index(left)  || 0
+    @right_index = ALPHA[:lower].index(right) || ALPHA[:upper].index(right) || 31
+    @casefold    = casefold
+  end
+
+  def expand
+    if lower_bounds?
+      downcase_range
+    elsif upper_bounds?
+      upcase_range
+    else
+      raise ArgumentError, 'Invalid Regexp range arguments!'
     end
-
-    META_CHARS.each { |k, v| re.gsub!(k, v) }
-    Regexp.new(re.force_encoding('UTF-8'), Regexp::FIXEDENCODING | options)
-  end
-
-  def translate_range(range_as_string, casefold: false)
-    return '' unless range_as_string
-
-    range_as_string = range_as_string.gsub(/\[\]/, '')
-    first, last = range_as_string.split('-')
-    expand_range(first, last, casefold)
-  end
-
-  def tr_char?(char)
-    tr_lower?(char) || tr_upper?(char)
-  end
-
-  def any_tr_char?(str)
-    str.chars.any? { |ch| tr_char?(ch) }
-  end
-
-  def tr_lower?(char)
-    ALPHA[:tr_lower].include? char
-  end
-
-  def tr_upper?(char)
-    ALPHA[:tr_upper].include? char
-  end
-
-  def conjuction?(string)
-    CONJUCTION.include? string
-  end
-
-  def start_with_a_special_char?(string)
-    string =~ /^[#{SPECIAL_CHARS}]/
-  end
-
-  def char_code(char)
-    ASCII_ALPHABET[char] || char&.ord.to_i
-  end
-
-  def spaceship(str1, str2)
-    min_length = [str1.length, str2.length].min
-    str1[0..min_length].each_char.with_index do |ch, i|
-      next if char_code(ch) == char_code(str2[i])
-
-      return (char_code(ch) > char_code(str2[i]) ? 1 : -1)
-    end
-
-    str1.length > str2.length ? 1 : -1
   end
 
   private
 
-  def expand_range(first, last, casefold)
-    if lower.include?(first) && lower.include?(last)
-      downcase_range(first, last, casefold)
-    elsif upper.include?(first) && upper.include?(last)
-      upcase_range(first, last, casefold)
-    else
-      raise ArgumentError, 'Invalid regexp range arguments!'
-    end
+  attr_reader :left, :right, :left_index, :right_index, :casefold
+
+  def lower_bounds?
+    [left, right].all? { ALPHA[:lower].include? _1 }
   end
 
-  def downcase_range(first, last, casefold)
-    lower(first, last) +
-      (lower_opposite(first, last) if casefold).to_s
+  def upper_bounds?
+    [left, right].all? { ALPHA[:upper].include? _1 }
   end
 
-  def upcase_range(first, last, casefold)
-    upper(first, last) +
-      (upper_opposite(first, last) if casefold).to_s
+  def downcase_range
+    "#{lower}#{casefold ? lower_opposite : ''}"
   end
 
-  def lower(first = nil, last = nil)
-    return ALPHA[:lower] if first.nil? || last.nil?
-
-    ALPHA[:lower][ALPHA[:lower].index(first)..ALPHA[:lower].index(last)]
+  def upcase_range
+    "#{upper}#{casefold ? upper_opposite : ''}"
   end
 
-  def lower_opposite(first, last)
-    upper[lower.index(first)..lower.index(last)].delete("^#{ALPHA[:tr_upper]}")
+  def lower
+    case_range(kind: :lower)
   end
 
-  def upper(first = nil, last = nil)
-    return ALPHA[:upper] if first.nil? || last.nil?
-
-    ALPHA[:upper][ALPHA[:upper].index(first)..ALPHA[:upper].index(last)]
+  def upper
+    case_range(kind: :upper)
   end
 
-  def upper_opposite(first, last)
-    lower[upper.index(first)..upper.index(last)].delete("^#{ALPHA[:tr_lower]}")
+  def lower_opposite
+    upper.delete("^#{ALPHA[:tr_upper]}")
+  end
+
+  def upper_opposite
+    lower.delete("^#{ALPHA[:tr_lower]}")
+  end
+
+  def case_range(kind:)
+    ALPHA[kind][left_index..right_index].join
   end
 end
 
-module TurkishSupport
-  include TurkishSupportHelpers
+# Let your regexps to speak in Turkish
+class TSRegexp
+  ALPHABET = 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZabcçdefgğhıijklmnoöpqrsştuüvwxyz'
+  RANGE_REGEXP = /\[[^\]]*?([#{ALPHABET}]-[#{ALPHABET}])[^\[]*?\]/.freeze
+
+  def initialize(pattern)
+    @source  = pattern.source
+    @options = pattern.options
+    @casefold = pattern.casefold?
+    translate
+  end
+
+  def translate
+    translate_matches
+    add_meta_charset
+    set_encoding
+  end
+
+  private
+
+  attr_reader :source, :options, :casefold
+
+  def translate_matches
+    while source.match(RANGE_REGEXP)
+      source.scan(RANGE_REGEXP).flatten.compact.each do |matching|
+        source.gsub! matching, translate_range(matching)
+      end
+    end
+  end
+
+  def translate_range(range_string)
+    first, last = range_string.gsub(/\[\]/, '').split('-')
+    TSRange
+      .new(left: first, right: last, casefold: casefold)
+      .expand
+  end
+
+  def add_meta_charset
+    meta = { '\w' => '[\p{Latin}\d_]', '\W' => '[^\p{Latin}\d_]' }.freeze
+    meta.each { |k, v| source.gsub!(k, v) }
+  end
+
+  def set_encoding
+    Regexp.new(source.force_encoding('UTF-8'), Regexp::FIXEDENCODING | options)
+  end
+end
+
+# A char inside Turkish Alphabet including English letters (q, w, x)
+class TSChar
+  ALPHABET = 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZabcçdefgğhıijklmnoöpqrsştuüvwxyz'
+  ASCII_ALPHABET = ALPHABET.chars.map.with_index { |ch, i| [ch, i + 65] }.to_h
+
+  def initialize(char)
+    @char = char
+  end
+
+  def code
+    ASCII_ALPHABET[char] || char&.ord.to_i
+  end
+
+  private
+
+  attr_reader :char
 end

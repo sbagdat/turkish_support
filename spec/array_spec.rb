@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 using TurkishSupport
 
 module TurkishSupport

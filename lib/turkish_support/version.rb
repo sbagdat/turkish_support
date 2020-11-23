@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 module TurkishSupport
-  VERSION = '2.0.1'
+  # Current version: 2.0.2
+  VERSION = '2.0.2'
 end

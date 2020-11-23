@@ -10,3 +10,5 @@ Style/Documentation:
   Enabled: false
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+Style/AsciiComments:
+  Enabled: false
