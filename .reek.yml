@@ -1,0 +1,8 @@
+---
+detectors:
+  IrresponsibleModule:
+    exclude:
+    - TurkishSupport
+  UncommunicativeVariableName:
+    exclude:
+    - TurkishSupport

@@ -1,15 +1,12 @@
+# frozen_string_literal: true
+
 module TurkishSupport
+  # :nodoc:
   refine Array do
     def sort
-      if block_given?
-        super
-      else
-        sort_by do |item|
-          item.chars.map do |ch|
-            ALPHABET.include?(ch) ? ASCII_ALPHABET[ch] : ch.ord
-          end
-        end
-      end
+      return super if block_given?
+
+      sort_by { _1.chars.map { |ch| TurkishRanges::TrText.new(ch).code } }
     end
 
     def sort!

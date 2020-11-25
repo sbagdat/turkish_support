@@ -1,4 +1,5 @@
-require 'spec_helper'
+# frozen_string_literal: false
+
 using TurkishSupport
 
 module TurkishSupport # rubocop:disable Metrics/ModuleLength
@@ -13,19 +14,21 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           word = turkish_words.sample
+
           expect { word[/\w+/] }.to_not(change { word })
         end
 
         it 'is able to capture Turkish characters' do
-          expect(turkish_words.all? { |w| w[/\w+/] == w }).to eq(true)
-          expect(turkish_words.all? { |w| w[/[a-z]+/] == w }).to eq(true)
-          expect(turkish_words.map(&:upcase).all? { |w| w[/[a-z]+/i] == w }).to eq(true)
+          expect(turkish_words.all? { |w| w[/\w+/] == w }).to    be true
+          expect(turkish_words.all? { |w| w[/[a-z]+/] == w }).to be true
+          expect(turkish_words.map(&:upcase).all? { |w| w[/[a-z]+/i] == w }).to be true
         end
       end
 
       context 'with destructive version' do
         it 'changes the original value of the string' do
           word = turkish_words.sample
+
           expect { word[/\w+/] = 'new value' }.to(change { word })
           expect(word).to eq('new value')
         end
@@ -35,34 +38,36 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
     describe '#index' do
       it 'does not change the original value of the string' do
         word = turkish_words.sample
+
         expect { word.index(/\w+/) }.to_not(change { word })
       end
 
       it 'is able to capture Turkish characters' do
-        expect(turkish_words.all? { |w| w.index(/\w+/).zero? }).to(eq(true))
-        expect(turkish_words.all? { |w| w.index(/[a-z]+/).zero? }).to eq(true)
-        expect(turkish_words.map(&:upcase).all? { |w| w.index(/[a-z]+/i).zero? }).to eq(true)
+        expect(turkish_words.all? { |w| w.index(/\w+/).zero? }).to    be true
+        expect(turkish_words.all? { |w| w.index(/[a-z]+/).zero? }).to be true
+        expect(turkish_words.map(&:upcase).all? { |w| w.index(/[a-z]+/i).zero? }).to be true
       end
 
       it 'begins to search from the right position' do
-        expect('şç-!+*/-ğüı'.index(/\w+/, 2)).to eq(8)
+        expect('şç-!+*/-ğüı'.index(/\w+/, 2)).to be 8
       end
     end
 
     describe '#rindex' do
       it 'does not change the original value of the string' do
         word = turkish_words.sample
+
         expect { word.rindex(/\w+/) }.to_not(change { word })
       end
 
       it 'is able to capture Turkish characters' do
-        expect(turkish_words.map(&:reverse).all? { |w| w.rindex(/\w+/) == w.size - 1 }).to(eq(true))
-        expect(turkish_words.map(&:reverse).all? { |w| w.rindex(/[a-z]+/) == w.size - 1 }).to eq(true)
-        expect(turkish_words.map { |w| w.upcase.reverse }.all? { |w| w.rindex(/[a-z]+/i) == w.size - 1 }).to(eq(true))
+        expect(turkish_words.map(&:reverse).all? { |w| w.rindex(/\w+/) == w.size - 1 }).to    be true
+        expect(turkish_words.map(&:reverse).all? { |w| w.rindex(/[a-z]+/) == w.size - 1 }).to be true
+        expect(turkish_words.map { |w| w.upcase.reverse }.all? { |w| w.rindex(/[a-z]+/i) == w.size - 1 }).to be true
       end
 
       it 'finishes the searching to the right position' do
-        expect('şç-!+*/-ğüı'.rindex(/\w+/, 7)).to eq(1)
+        expect('şç-!+*/-ğüı'.rindex(/\w+/, 7)).to be 1
       end
     end
 
@@ -99,19 +104,21 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           sentence = turkish_words * ' '
+
           expect { sentence.slice(/\w+/) }.to_not(change { sentence })
         end
 
         it 'is able to capture Turkish characters' do
-          expect(turkish_words.all? { |w| w.slice(/\w+/) == w }).to(eq(true))
-          expect(turkish_words.all? { |w| w.slice(/[a-z]+/) == w }).to eq(true)
-          expect(turkish_words.map(&:upcase).all? { |w| w.slice(/[a-z]+/i) == w }).to eq(true)
+          expect(turkish_words.all? { |w| w.slice(/\w+/) == w }).to    be true
+          expect(turkish_words.all? { |w| w.slice(/[a-z]+/) == w }).to be true
+          expect(turkish_words.map(&:upcase).all? { |w| w.slice(/[a-z]+/i) == w }).to be true
         end
       end
 
       context 'with destructive version' do
         it 'changes the original value of the string' do
           sentence = turkish_words * ' '
+
           expect { sentence.slice!(/\w+/) }.to(change { sentence })
           expect(sentence).to eq(" #{turkish_words[1..] * ' '}")
         end
@@ -120,9 +127,9 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
     describe '#split' do
       it 'is able to capture Turkish characters' do
-        expect(turkish_words.join(' ').split(/\w+/).join.strip.empty?).to(eq(true))
-        expect(turkish_words.join(' ').split(/[a-z]+/).join.strip.empty?).to(eq(true))
-        expect(turkish_words.join(' ').upcase.split(/[a-z]+/i).join.strip.empty?).to(eq(true))
+        expect(turkish_words.join(' ').split(/\w+/).join.strip.empty?).to    be true
+        expect(turkish_words.join(' ').split(/[a-z]+/).join.strip.empty?).to be true
+        expect(turkish_words.join(' ').upcase.split(/[a-z]+/i).join.strip.empty?).to be true
       end
     end
 
@@ -134,12 +141,14 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
         it 'upcases all of Turkish characters' do
           upcased_string = downcased_turkish_alphabet.upcase
+
           expect(upcased_string).to(eq(upcased_turkish_alphabet))
         end
 
         it 'upcases English characters except i as I' do
           upcased_string = downcased_english_alphabet.upcase
-          expect(upcased_string).to(eq(upcased_english_alphabet.tr('I', 'İ')))
+
+          expect(upcased_string).to eq upcased_english_alphabet.tr('I', 'İ')
         end
       end
 
@@ -159,12 +168,12 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
         it 'downcases all of Turkish characters' do
           downcased_string = upcased_turkish_alphabet.downcase
-          expect(downcased_string).to(eq(downcased_turkish_alphabet))
+          expect(downcased_string).to eq downcased_turkish_alphabet
         end
 
         it 'downcases English characters except I as ı' do
           downcased_string = upcased_english_alphabet.downcase
-          expect(downcased_string).to(eq(downcased_english_alphabet.tr('i', 'ı')))
+          expect(downcased_string).to eq downcased_english_alphabet.tr('i', 'ı')
         end
       end
 
@@ -180,27 +189,31 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           turkish_word = turkish_words.sample
+
           expect { turkish_word.capitalize }.to_not(change { turkish_word })
         end
 
         it 'capitalizes the leading first Turkish character' do
           capitalized_words = turkish_words.map(&:capitalize)
-          expect(capitalized_words).to(eq(%w[Çamur Ihlamur İnsan Ördek Şahika Ümraniye]))
+
+          expect(capitalized_words).to eq %w[Çamur Ihlamur İnsan Ördek Şahika Ümraniye]
         end
 
         it 'capitalizes the first character of a string and downcase others' do
-          expect('türkÇE desteĞİ'.capitalize).to(eq('Türkçe desteği'))
+          expect('türkÇE desteĞİ'.capitalize).to eq 'Türkçe desteği'
         end
 
         it 'capitalizes the first character of an English string' do
           english_word = 'spy'
-          expect(english_word.capitalize).to(eq('Spy'))
+
+          expect(english_word.capitalize).to eq 'Spy'
         end
       end
 
       context 'with destructive version' do
         it 'changes the original value of the string' do
           turkish_word = 'çamur'
+
           expect { turkish_word.capitalize! }.to(change { turkish_word })
           expect(turkish_word).to eq('Çamur')
         end
@@ -211,11 +224,11 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       it 'compares Turkish characters correctly' do
         result = downcased_turkish_alphabet.casecmp(upcased_turkish_alphabet)
 
-        expect(result.zero?).to(eq(true))
+        expect(result.zero?).to be true
       end
 
       it 'compares Turkish characters correctly' do
-        expect('sıtkı'.casecmp('SıTKI')&.zero?).to(eq(true))
+        expect('sıtkı'.casecmp('SıTKI')&.zero?).to be true
       end
     end
 
@@ -223,40 +236,40 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           word = 'mERHABA çAMUR iSMETOĞULLARI'
+
           expect { word.titleize }.to_not(change { word })
         end
 
         it 'upcases first character of all words' do
           titleized = 'merhaba çamur ismet'.titleize
+
           expect(titleized).to(eq('Merhaba Çamur İsmet'))
         end
 
         it 'no problem with words that consist of special chars only' do
           titleized = '(( merhaba çamur ismet'.titleize
+
           expect(titleized).to(eq('(( Merhaba Çamur İsmet'))
         end
 
         it 'downcases characters other than first characters of all words' do
           titleized = 'mERHABA çAMUR iSMETOĞULLARI'.titleize
+
           expect(titleized).to(eq('Merhaba Çamur İsmetoğulları'))
         end
 
         it 'support strings that include paranthesis, quotes, etc.' do
           titleized = "rUBY roCkS... (really! 'tRUSt' ME)".titleize
-          expect(titleized).to(eq("Ruby Rocks... (Really! 'Trust' Me)"))
-        end
 
-        it 'does not capitalize conjuctions when false passed' do
-          titleized = 'kerem VE aslı VeYa leyla İlE mecnun'.titleize(conjuction: false)
-          expect(titleized).to eq('Kerem ve Aslı veya Leyla ile Mecnun')
+          expect(titleized).to(eq("Ruby Rocks... (Really! 'Trust' Me)"))
         end
       end
 
       context 'with destructive version' do
         it 'changes the original value of the string' do
           word = 'mERHABA çAMUR iSMETOĞULLARI'
-          expect { word.titleize! }.to(change { word })
 
+          expect { word.titleize! }.to(change { word })
           expect(word).to(eq('Merhaba Çamur İsmetoğulları'))
         end
       end
@@ -266,11 +279,13 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with non-destructive version' do
         it 'does not change the original value of the string' do
           word = 'mErHaba çamur ismetoğullarI'
+
           expect { word.swapcase }.to_not(change { word })
         end
 
         it 'swaps characters correctly' do
           word = 'mErHaba çamur ismetoğullarI'.swapcase
+
           expect(word).to(eq('MeRhABA ÇAMUR İSMETOĞULLARı'))
         end
       end
@@ -278,6 +293,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'with destructive version' do
         it 'changes the original value of the string' do
           word = 'mErHaba çamur ismetoğullarI'
+
           expect { word.swapcase! }.to(change { word })
           expect(word).to(eq('MeRhABA ÇAMUR İSMETOĞULLARı'))
         end
@@ -317,7 +333,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       end
 
       it "matches Turkish characters when regex include '\\w'" do
-        expect(turkish_words.join(' ').scan(/\W+/).map(&:strip).all?(&:empty?)).to(eq(true))
+        expect(turkish_words.join(' ').scan(/\W+/).map(&:strip).all?(&:empty?)).to be true
       end
     end
 
@@ -325,6 +341,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'non-destructive version' do
         it 'does not affect the object' do
           word = 'ağapaşa ağa'
+
           expect { word.sub(/\w+/, 'bey') }.to_not(change { word })
         end
 
@@ -338,6 +355,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'destructive version' do
         it 'affects the object' do
           word = 'ağapaşa ağa'
+
           expect { word.sub!(/\w+/, 'bey') }.to(change { word }.from('ağapaşa ağa').to('bey ağa'))
         end
       end
@@ -347,6 +365,7 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'non-destructive version' do
         it 'does not affect the object' do
           word = 'ağapaşa ağa'
+
           expect { word.gsub(/\w+/, 'bey') }.to_not(change { word })
         end
 
@@ -360,8 +379,41 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
       context 'destructive version' do
         it 'affects the object' do
           word = 'ağapaşa ağa'
+
           expect { word.gsub!(/\w+/, 'bey') }.to(change { word }.from('ağapaşa ağa').to('bey bey'))
         end
+      end
+    end
+
+    describe '#>' do
+      it 'should compares turkish cars correctly' do
+        expect('d'   > 'ç').to   be true
+        expect('ağa' > 'aga').to be true
+        expect('ğ'   > 'h').to   be false
+      end
+    end
+
+    describe '#>=' do
+      it 'should compares turkish cars correctly' do
+        expect('d'   >= 'ç').to   be true
+        expect('aha' >= 'ağa').to be true
+        expect('ğ.'  >= 'ğ').to   be true
+      end
+    end
+
+    describe '#<' do
+      it 'should compares turkish cars correctly' do
+        expect('d'   < 'ç').to   be false
+        expect('ağa' < 'aga').to be false
+        expect('ğ'   < 'h').to   be true
+      end
+    end
+
+    describe '#<=' do
+      it 'should compares turkish cars correctly' do
+        expect('d'   <= 'ç').to   be false
+        expect('aha' <= 'ağa').to be false
+        expect('ğ.'  <= 'ğ').to   be false
       end
     end
 
@@ -404,10 +456,10 @@ module TurkishSupport # rubocop:disable Metrics/ModuleLength
 
       context 'invalid comparisons' do
         it 'returns nil' do
-          expect('a' <=> 3.5).to eq(nil)
-          expect('a' <=> true).to eq(nil)
-          expect('a' <=> Object.new).to eq(nil)
-          expect('a' <=> 1).to eq(nil)
+          expect('a' <=> 3.5).to        be nil
+          expect('a' <=> true).to       be nil
+          expect('a' <=> Object.new).to be nil
+          expect('a' <=> 1).to          be nil
         end
       end
     end
