@@ -1,4 +1,7 @@
-# TurkishSupport [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](https://badge.fury.io/rb/turkish_support) [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support) [![Code Climate](https://codeclimate.com/github/sbagdat/turkish_support/badges/gpa.svg)](https://codeclimate.com/github/sbagdat/turkish_support)
+# TurkishSupport 
+[![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](https://badge.fury.io/rb/turkish_support) 
+[![Build Status](https://travis-ci.com/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.com/sbagdat/turkish_support) 
+[![Code Climate](https://codeclimate.com/github/sbagdat/turkish_support/badges/gpa.svg)](https://codeclimate.com/github/sbagdat/turkish_support)
 
 Turkish character support for core ruby methods. This gem provides support nearly all `String` methods,
 such as `String#split`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some 
