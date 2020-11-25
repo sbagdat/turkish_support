@@ -10,19 +10,21 @@ module TurkishSupport
                     swapcase
                     swapcase!].freeze
 
-  REGEX_REQUIRED_METHODS = %i[match scan].freeze
-  REGEX_OPTIONAL_METHODS = %i[[]
-                              []=
-                              index
-                              rindex
-                              partition
-                              rpartition
-                              slice
-                              slice!
-                              split
-                              sub
-                              sub!
-                              gsub
-                              gsub!].freeze
-  REGEX_METHS = REGEX_REQUIRED_METHODS + REGEX_OPTIONAL_METHODS
+  REGEX_METHODS = %i[[]
+                     []=
+                     index
+                     gsub
+                     gsub!
+                     match
+                     rindex
+                     partition
+                     rpartition
+                     scan
+                     slice
+                     slice!
+                     split
+                     sub
+                     sub!
+                     gsub
+                     gsub!].freeze
 end

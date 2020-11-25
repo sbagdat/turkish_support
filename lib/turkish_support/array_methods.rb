@@ -6,7 +6,7 @@ module TurkishSupport
     def sort
       return super if block_given?
 
-      sort_by { |item| item.chars.map { |ch| TSChar.new(ch).code } }
+      sort_by { _1.chars.map { |ch| TurkishRanges::TrText.new(ch).code } }
     end
 
     def sort!

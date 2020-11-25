@@ -1,16 +1,12 @@
-# TurkishSupport
+# TurkishSupport [![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](https://badge.fury.io/rb/turkish_support) [![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support) [![Code Climate](https://codeclimate.com/github/sbagdat/turkish_support/badges/gpa.svg)](https://codeclimate.com/github/sbagdat/turkish_support)
 
-[![Gem Version](https://badge.fury.io/rb/turkish_support.svg)](https://badge.fury.io/rb/turkish_support)
-[![Build Status](https://travis-ci.org/sbagdat/turkish_support.svg?branch=master)](https://travis-ci.org/sbagdat/turkish_support)
-
-Turkish character support for core ruby methods. This gem provides support nearly all `String` methods, such as `String#upcase`, `String#downcase`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some bonus methods like `String#titleize`.
+Turkish character support for core ruby methods. This gem provides support nearly all `String` methods,
+such as `String#split`, `String#match`, `String#gsub`. It also provides support for `Array#sort`and some 
+bonus methods like `String#titleize`.
 
 ## Requirements
-
 * Ruby  >= 2.7.0
 * Rails >= 6.0.0
-
-__Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -42,20 +38,24 @@ __Notice:__ TurkishSupport uses __refinements__ instead of monkey patching.
 * [Array Methods](#array-methods)
   * [sort](#sort-and-sort)
 
-
 ## Installation
-
 Add this line to your application's Gemfile:
 
-    gem 'turkish_support'
+```
+gem 'turkish_support'
+```
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install turkish_support
+```
+$ gem install turkish_support
+```
 
 ## Usage
 
@@ -76,15 +76,16 @@ Example usage inside a class:
 ```ruby
 require 'turkish_support'
 
-class Test
+class CanSpeakInTurkish
   using TurkishSupport
 
-  def up(str)
-    str.upcase
+  def split_me_up(string, sep)
+    string.split(sep)
   end
 end
 
-Test.new.up('içel')  # => "İÇEL"
+CanSpeakInTurkish.new.split_me_up('çar çarı çarşı', 'ç')
+# ['ar', 'arı', 'arşı']
 ```
 
 ### Using with ruby on rails
@@ -96,12 +97,13 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```ruby
   using TurkishSupport
 
-  class SampleModel < ApplicationRecord
+  class TopModel < ApplicationRecord
     # your code goes here
   end
 ```
 
-* If you want to use TurkishSupport with a custom class or a module that is not inherited from any rails tie, you must add `using TurkishSupport` line to the class or module.
+* If you want to use TurkishSupport with a custom class or a module that is not inherited from any rails tie, 
+you must add `using TurkishSupport` line to the class or module.
 
 ```ruby
   class CustomClass
@@ -130,14 +132,12 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```
 
 ### [] and []=
-
 ```ruby
   'Türkiye Cumhuriyeti'[/\w+/] # => "Türkiye"
   'Çetin'[/[a-ğ]+/i]           # => "Çe"
 ```
 
 ### capitalize and capitalize!
-
 ```ruby
   str = 'türkÇE desteĞİ'
 
@@ -146,13 +146,11 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```
 
 ### casecmp
-
 ```ruby
   'sıtKI'.casecmp('SITkı')     # => 0
 ```
 
 ### downcase and downcase!
-
 ```ruby
   str = 'İSMAİL'
 
@@ -161,20 +159,17 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```
 
 ### gsub and gsub!
-
 ```ruby
   'ağa paşa ağa'.gsub(/\b[a-h]+\b/, 'bey') # => "bey paşa bey"
 ```
 
 ### index
-
 ```ruby
   '?ç-!+*/-ğüı'.index(/\w+/)        # => 1
   '?ç-!+*/-ğüı'.index(/[a-z]+/, 2)  # => 8
 ```
 
 ### match
-
 ```ruby
   'Aşağı'.match(/\w+/)
   # => #<MatchData "Aşağı">
@@ -193,26 +188,22 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```
 
 ### partition
-
 ```ruby
   'Bağlarbaşı Çarşı'.partition(/\W+/) # => ["Bağlarbaşı", " ", "Çarşı"]
 ```
 
 ### rpartition
-
 ```ruby
   'Bağlarbaşı Çarşı Kalabalık'.rpartition(/\W+/)
   # => ["Bağlarbaşı Çarşı", " ", "Kalabalık"]
 ```
 
 ### rindex
-
 ```ruby
   'şç-!+*/-ğüı'.rindex(/\w+/, 7)  # => 1
 ```
 
 ### scan
-
 ```ruby
   'Bağlarbaşı Çarşı Kalabalık'.scan(/[a-z]+/i)
   # => ["Bağlarbaşı", "Çarşı", "Kalabalık"]
@@ -220,13 +211,11 @@ __Note:__ You don't need to require, because it is already required by the rails
 
 
 ### slice and slice!
-
 ```ruby
   'Duayen'.slice(/[^h-ö]+/) # => "Duaye"
 ```
 
 ### split
-
 ```ruby
   'Bağlarbaşı Çarşı Kalabalık'.split(/\W+/)
   # => ["Bağlarbaşı", "Çarşı", "Kalabalık"]
@@ -236,22 +225,18 @@ __Note:__ You don't need to require, because it is already required by the rails
 ```
 
 ### sub and sub!
-
 ```ruby
   'ağapaşaağa'.sub(/[a-h]+/, 'bey')  # => "beypaşaağa"
 ```
 
 ### swapcase and swapcase!
-
 ```ruby
   'TuğÇE'.swapcase    # => "tUĞçe"
   'TuğÇE'.swapcase!   # => "tUĞçe"
 ```
 
 ### titleize and titleize!
-
 *These methods are not core methods of ruby, but they are accepted as useful in most situations.*
-
 ```ruby
   'türkÇE desteĞİ'.titleize           # => "Türkçe Desteği"
   'türkÇE desteĞİ'.titleize!          # => "Türkçe Desteği"
@@ -259,11 +244,6 @@ __Note:__ You don't need to require, because it is already required by the rails
   # Parenthesis, quotes, etc. support
   "rUBY roCkS... (really! 'tRUSt' ME)".titleize
   # => "Ruby Rocks... (Really! 'Trust' Me)"
-
-  # If you don't want to capitalize conjuctions,
-  # simply pass a false value to conjuction: parameter
-  "kerem VE aslı VeYa leyla İlE mecnun".titleize(conjuction: false)
-  # => "Kerem ve Aslı veya Leyla ile Mecnun"
 ```
 
 ### upcase and upcase!
@@ -287,10 +267,18 @@ __Note:__ You don't need to require, because it is already required by the rails
   # => ["dört", "ılık", "iğne", "iki", "iyne", "üç"]
 ```
 
+## Development
+
+To install this gem onto your local machine, run `bundle exec rake install`. 
+
 ## Contributing
 
-1. Fork it ( http://github.com/sbagdat/turkish_support/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Bug reports and pull requests are welcome on GitHub at https://github.com/sbagdat/turkish_support. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/sbagdat/turkish_suppport/blob/master/CODE_OF_CONDUCT.md).
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the TurkishSupport project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct]
