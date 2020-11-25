@@ -20,11 +20,13 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
   spec.add_runtime_dependency 'turkish_ranges', '~> 0.1'
+  spec.add_runtime_dependency 'turkish_regexps', '~> 0.1'
 
-  spec.add_development_dependency 'turkish_ranges', '~> 0.1'
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.10'
+  spec.add_development_dependency 'turkish_ranges', '~> 0.1'
+  spec.add_development_dependency 'turkish_regexps', '~> 0.1'
 end
