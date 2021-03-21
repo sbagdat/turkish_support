@@ -88,7 +88,7 @@ class CanSpeakInTurkish
   end
 end
 
-CanSpeakInTurkish.new.split_me_up('çar çarı çarşı', 'ç')
+CanSpeakInTurkish.new.split_me_up('çarçarıçarşı', 'ç')
 # ['ar', 'arı', 'arşı']
 ```
 
